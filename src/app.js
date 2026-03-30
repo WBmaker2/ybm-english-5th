@@ -1,4 +1,5 @@
 import { createGameState, drawNextCard, resetCurrentRound } from "./game-state.js";
+import { createHeroMediaView } from "./hero-view.js";
 import { createDrawSoundPlayer } from "./sound.js";
 
 const cards = [
@@ -135,11 +136,18 @@ function animateHeroCard() {
 
 function renderHero(action = "idle", roundAdvanced = false) {
   heroRound.textContent = `Round ${state.round}`;
+  const selectedCard = state.selectedCardId ? cardById.get(state.selectedCardId) : null;
+  const drawOrder = state.selectedCardId ? state.drawnMap[state.selectedCardId] : null;
+  const heroMediaView = createHeroMediaView({ selectedCard, drawOrder });
+
+  heroPlaceholder.hidden = heroMediaView.placeholderHidden;
+  heroImage.hidden = heroMediaView.imageHidden;
+  heroImage.src = heroMediaView.imageSrc;
+  heroImage.alt = heroMediaView.imageAlt;
+  heroBadge.hidden = heroMediaView.badgeHidden;
+  heroBadge.textContent = heroMediaView.badgeText;
 
   if (!state.selectedCardId) {
-    heroPlaceholder.hidden = false;
-    heroImage.hidden = true;
-    heroBadge.hidden = true;
     heroTitle.textContent = "준비 완료";
     heroMessage.textContent =
       "다섯 장은 한 라운드에 한 번씩만 뽑힙니다. 다 뽑으면 다음 클릭에서 새 라운드가 시작됩니다.";
@@ -149,15 +157,6 @@ function renderHero(action = "idle", roundAdvanced = false) {
     return;
   }
 
-  const selectedCard = cardById.get(state.selectedCardId);
-  const drawOrder = state.drawnMap[state.selectedCardId];
-
-  heroPlaceholder.hidden = true;
-  heroImage.hidden = false;
-  heroImage.src = selectedCard.src;
-  heroImage.alt = `${selectedCard.title} 크게 보기`;
-  heroBadge.hidden = false;
-  heroBadge.textContent = `${drawOrder}번째 카드`;
   heroTitle.textContent = selectedCard.title;
 
   if (roundAdvanced) {
