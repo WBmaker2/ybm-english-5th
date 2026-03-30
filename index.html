@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>허락! 골든 벨</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow-left" aria-hidden="true"></div>
+    <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+    <div class="app-shell">
+      <header class="hero-header">
+        <p class="hero-kicker">YBM 초등영어 5학년 · 2단원</p>
+        <h1>허락! 골든 벨</h1>
+        <p class="hero-intro">
+          카드판의 그림 다섯 장을 보며 수업을 시작하고, 버튼을 눌러 랜덤으로 한 장씩
+          골든 벨 무대로 올려 보세요.
+        </p>
+      </header>
+
+      <main class="main-layout">
+        <section class="board-panel" aria-labelledby="board-title">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Card Board</p>
+              <h2 id="board-title">3 x 2 카드판</h2>
+            </div>
+            <p class="panel-note">뽑힌 카드는 순서와 함께 그대로 남아 있습니다.</p>
+          </div>
+          <div class="card-grid" id="card-grid"></div>
+        </section>
+
+        <section class="focus-panel" aria-labelledby="focus-title">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Golden Bell Stage</p>
+              <h2 id="focus-title">중앙 카드 무대</h2>
+            </div>
+            <p class="panel-note" id="stage-note">랜덤 뽑기를 눌러 첫 번째 카드를 선택하세요.</p>
+          </div>
+
+          <article class="hero-card" id="hero-card">
+            <div class="hero-visual">
+              <div class="hero-placeholder" id="hero-placeholder">
+                첫 카드를 기다리는 중입니다.
+              </div>
+              <img class="hero-image" id="hero-image" alt="" hidden />
+              <span class="hero-badge" id="hero-badge" hidden></span>
+              <div class="hero-flare" aria-hidden="true"></div>
+            </div>
+
+            <div class="hero-copy">
+              <p class="hero-round" id="hero-round">Round 1</p>
+              <h3 id="hero-title">준비 완료</h3>
+              <p id="hero-message">
+                다섯 장은 한 라운드에 한 번씩만 뽑힙니다. 다 뽑으면 다음 클릭에서 새 라운드가 시작됩니다.
+              </p>
+            </div>
+          </article>
+
+          <div class="controls">
+            <button class="action-button primary" id="draw-button" type="button">
+              랜덤 뽑기
+            </button>
+            <button class="action-button secondary" id="reset-button" type="button">
+              초기화
+            </button>
+          </div>
+
+          <p class="live-status" id="live-status" aria-live="polite"></p>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

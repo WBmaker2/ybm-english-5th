@@ -1,0 +1,10 @@
+{
+  "name": "ybm-5th-lesson2-golden-bell",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "\"C:\\Program Files\\nodejs\\node.exe\" --test --test-isolation=none tests/game-state.test.js",
+    "start": "\"C:\\Program Files\\nodejs\\node.exe\" server.js"
+  }
+}
