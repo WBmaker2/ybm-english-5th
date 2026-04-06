@@ -1,46 +1,24 @@
 import { createGameState, drawNextCard, resetCurrentRound } from "./game-state.js";
 import { createHeroMediaView } from "./hero-view.js";
+import { lessons, getLessonById } from "./lesson-data.js";
+import { buildLessonViewModel } from "./lesson-view.js";
+import { getHashForScreen, getScreenFromHash } from "./screen-state.js";
 import { createDrawSoundPlayer } from "./sound.js";
 
-const cards = [
-  {
-    id: "card-1",
-    title: "그림 1",
-    src: "./pictures/Hpdf_8RYJVGrmA3.png",
-    alt: "허락 골든 벨 게임 그림 카드 1"
-  },
-  {
-    id: "card-2",
-    title: "그림 2",
-    src: "./pictures/Hpdf_iXRPHmceIk.png",
-    alt: "허락 골든 벨 게임 그림 카드 2"
-  },
-  {
-    id: "card-3",
-    title: "그림 3",
-    src: "./pictures/Hpdf_JY9QnLb8kn.png",
-    alt: "허락 골든 벨 게임 그림 카드 3"
-  },
-  {
-    id: "card-4",
-    title: "그림 4",
-    src: "./pictures/Hpdf_kZKJYy9cf2.png",
-    alt: "허락 골든 벨 게임 그림 카드 4"
-  },
-  {
-    id: "card-5",
-    title: "그림 5",
-    src: "./pictures/Hpdf_ZDBnsFkULR.png",
-    alt: "허락 골든 벨 게임 그림 카드 5"
-  }
-];
-
-const cardById = new Map(cards.map((card) => [card.id, card]));
-
+const homeScreen = document.querySelector("#home-screen");
+const gameScreen = document.querySelector("#game-screen");
+const lessonSelectionGrid = document.querySelector("#lesson-selection-grid");
+const homeButton = document.querySelector("#home-button");
+const headerContext = document.querySelector("#header-context");
+const lessonKicker = document.querySelector("#lesson-kicker");
+const lessonTitle = document.querySelector("#lesson-title");
+const lessonDescription = document.querySelector("#lesson-description");
+const boardNote = document.querySelector("#board-note");
 const cardGrid = document.querySelector("#card-grid");
 const drawButton = document.querySelector("#draw-button");
 const resetButton = document.querySelector("#reset-button");
 const stageNote = document.querySelector("#stage-note");
+const focusStatusSlot = document.querySelector("#focus-status-slot");
 const heroCard = document.querySelector("#hero-card");
 const heroImage = document.querySelector("#hero-image");
 const heroPlaceholder = document.querySelector("#hero-placeholder");
@@ -50,22 +28,85 @@ const heroTitle = document.querySelector("#hero-title");
 const heroMessage = document.querySelector("#hero-message");
 const liveStatus = document.querySelector("#live-status");
 
+const lessonStateById = new Map();
 const playDrawSound = createDrawSoundPlayer();
 
-let state = createGameState(cards.map((card) => card.id));
-
-function getCardTitle(cardId) {
-  return cardById.get(cardId)?.title || "그림 카드";
+function getCardById(lesson, cardId) {
+  return lesson.cards.find((card) => card.id === cardId) || null;
 }
 
-function renderStatusCard() {
-  const lastCardTitle = state.selectedCardId ? getCardTitle(state.selectedCardId) : "아직 없음";
+function getCardTitle(lesson, cardId) {
+  return getCardById(lesson, cardId)?.title || "그림 카드";
+}
+
+function ensureLessonState(lesson) {
+  if (!lessonStateById.has(lesson.id)) {
+    lessonStateById.set(
+      lesson.id,
+      createGameState(lesson.cards.map((card) => card.id))
+    );
+  }
+
+  return lessonStateById.get(lesson.id);
+}
+
+function setLessonState(lessonId, nextState) {
+  lessonStateById.set(lessonId, nextState);
+}
+
+function getCurrentLesson() {
+  const screen = getScreenFromHash(window.location.hash);
+
+  if (screen.name !== "lesson") {
+    return null;
+  }
+
+  return getLessonById(screen.lessonId);
+}
+
+function navigateToScreen(screen) {
+  const nextHash = getHashForScreen(screen);
+
+  if (window.location.hash === nextHash) {
+    renderScreen();
+    return;
+  }
+
+  window.location.hash = nextHash;
+}
+
+function renderLessonSelection() {
+  lessonSelectionGrid.innerHTML = lessons
+    .map(
+      (lesson) => `
+        <article class="lesson-option">
+          <div class="lesson-option-media">
+            <span class="lesson-count-badge">${lesson.cards.length} cards</span>
+            <img src="${lesson.cards[0].src}" alt="${lesson.title} 대표 그림" />
+          </div>
+          <div class="lesson-option-body">
+            <p class="section-label">${lesson.unitLabel}</p>
+            <h3>${lesson.title}</h3>
+            <p>${lesson.homeDescription}</p>
+            <button
+              class="action-button primary lesson-option-button"
+              type="button"
+              data-lesson-id="${lesson.id}"
+            >
+              ${lesson.title} 시작
+            </button>
+          </div>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderStatusCardMarkup(lesson, state) {
+  const lastCardTitle = state.selectedCardId ? getCardTitle(lesson, state.selectedCardId) : "아직 없음";
   const orderMarkup = state.drawnOrder.length
     ? `<ul class="order-list">${state.drawnOrder
-        .map(
-          (cardId, index) =>
-            `<li>${index + 1}. ${getCardTitle(cardId)}</li>`
-        )
+        .map((cardId, index) => `<li>${index + 1}. ${getCardTitle(lesson, cardId)}</li>`)
         .join("")}</ul>`
     : `<p class="order-empty">아직 뽑힌 카드가 없어요. 랜덤 뽑기를 눌러 시작해 보세요.</p>`;
 
@@ -73,7 +114,7 @@ function renderStatusCard() {
     <article class="status-card">
       <div>
         <p class="section-label">Game Status</p>
-        <h3 class="status-headline">골든 벨 진행판</h3>
+        <h3 class="status-headline">${lesson.title} 진행판</h3>
       </div>
       <div class="status-meta">
         <div class="status-metric">
@@ -97,35 +138,35 @@ function renderStatusCard() {
   `;
 }
 
-function renderBoard() {
-  const cardMarkup = cards
-    .map((card) => {
-      const drawOrder = state.drawnMap[card.id];
-      const classes = [
-        "board-card",
-        drawOrder ? "is-drawn" : "",
-        state.selectedCardId === card.id ? "is-selected" : ""
-      ]
-        .filter(Boolean)
-        .join(" ");
+function renderBoard(lesson, state) {
+  const viewModel = buildLessonViewModel({ lesson, state });
+  const statusCardMarkup = renderStatusCardMarkup(lesson, state);
+
+  cardGrid.innerHTML = viewModel.boardItems
+    .map((item) => {
+      if (item.type === "status") {
+        return statusCardMarkup;
+      }
 
       return `
-        <article class="${classes}" aria-label="${card.title}">
+        <article class="board-card ${item.drawOrder ? "is-drawn" : ""} ${item.isSelected ? "is-selected" : ""}" aria-label="${item.card.title}">
           <div class="card-image-shell">
-            <img src="${card.src}" alt="${card.alt}" />
+            <img src="${item.card.src}" alt="${item.card.alt}" />
           </div>
-          ${drawOrder ? `<span class="drawn-chip">뽑힘</span>` : ""}
-          ${drawOrder ? `<span class="order-badge">${drawOrder}</span>` : ""}
+          ${item.drawOrder ? `<span class="drawn-chip">뽑힘</span>` : ""}
+          ${item.drawOrder ? `<span class="order-badge">${item.drawOrder}</span>` : ""}
           <div class="card-footer">
-            <p>${drawOrder ? `${drawOrder}번째 순서` : "대기 중"}</p>
-            <h3>${card.title}</h3>
+            <p>${item.drawOrder ? `${item.drawOrder}번째 순서` : "대기 중"}</p>
+            <h3>${item.card.title}</h3>
           </div>
         </article>
       `;
     })
     .join("");
 
-  cardGrid.innerHTML = `${cardMarkup}${renderStatusCard()}`;
+  focusStatusSlot.hidden = lesson.usesStatusCardGridSlot;
+  focusStatusSlot.innerHTML = lesson.usesStatusCardGridSlot ? "" : statusCardMarkup;
+  drawButton.textContent = viewModel.drawButtonLabel;
 }
 
 function animateHeroCard() {
@@ -134,9 +175,9 @@ function animateHeroCard() {
   heroCard.classList.add("is-revealed");
 }
 
-function renderHero(action = "idle", roundAdvanced = false) {
+function renderHero(lesson, state, action = "idle", roundAdvanced = false) {
   heroRound.textContent = `Round ${state.round}`;
-  const selectedCard = state.selectedCardId ? cardById.get(state.selectedCardId) : null;
+  const selectedCard = state.selectedCardId ? getCardById(lesson, state.selectedCardId) : null;
   const drawOrder = state.selectedCardId ? state.drawnMap[state.selectedCardId] : null;
   const heroMediaView = createHeroMediaView({ selectedCard, drawOrder });
 
@@ -147,12 +188,11 @@ function renderHero(action = "idle", roundAdvanced = false) {
   heroBadge.hidden = heroMediaView.badgeHidden;
   heroBadge.textContent = heroMediaView.badgeText;
 
-  if (!state.selectedCardId) {
+  if (!selectedCard) {
     heroTitle.textContent = "준비 완료";
-    heroMessage.textContent =
-      "다섯 장은 한 라운드에 한 번씩만 뽑힙니다. 다 뽑으면 다음 클릭에서 새 라운드가 시작됩니다.";
-    stageNote.textContent = "랜덤 뽑기를 눌러 첫 번째 카드를 선택하세요.";
-    liveStatus.textContent = "게임이 초기 상태입니다.";
+    heroMessage.textContent = `${lesson.cards.length}장은 한 라운드에 한 번씩만 뽑힙니다. 모두 뽑고 나면 다음 클릭에서 새 라운드가 시작됩니다.`;
+    stageNote.textContent = `랜덤 뽑기를 눌러 ${lesson.title}의 첫 번째 카드를 선택하세요.`;
+    liveStatus.textContent = `${lesson.title}이 초기 상태입니다.`;
     heroCard.classList.remove("is-revealed");
     return;
   }
@@ -161,10 +201,10 @@ function renderHero(action = "idle", roundAdvanced = false) {
 
   if (roundAdvanced) {
     heroMessage.textContent = `새 라운드가 시작됐어요. ${selectedCard.title}가 첫 번째 카드로 선택되었습니다.`;
-    stageNote.textContent = `Round ${state.round}이 시작되었습니다. 남은 카드는 ${state.remainingCount}장입니다.`;
+    stageNote.textContent = `${lesson.title}의 새 라운드가 시작되었습니다. 남은 카드는 ${state.remainingCount}장입니다.`;
     liveStatus.textContent = `새 라운드 시작. ${selectedCard.title}가 첫 번째 카드입니다.`;
   } else {
-    heroMessage.textContent = `${selectedCard.title}가 라운드 ${state.round}의 ${drawOrder}번째 카드로 무대에 올랐습니다.`;
+    heroMessage.textContent = `${selectedCard.title}가 ${lesson.title} 라운드 ${state.round}의 ${drawOrder}번째 카드로 무대에 올랐습니다.`;
     stageNote.textContent = `현재 라운드에 남은 카드는 ${state.remainingCount}장입니다.`;
     liveStatus.textContent = `${selectedCard.title}가 선택되었습니다.`;
   }
@@ -174,30 +214,99 @@ function renderHero(action = "idle", roundAdvanced = false) {
   }
 }
 
-function renderControls() {
-  drawButton.textContent =
-    state.remainingCount === 0 && state.selectedCardId ? "다음 라운드 추첨" : "랜덤 뽑기";
+function renderHomeScreen() {
+  document.title = "YBM 영어 골든 벨";
+  headerContext.textContent = "단원을 선택해 Lesson 2와 Lesson 3 자료를 바로 사용할 수 있습니다.";
+  homeButton.hidden = true;
+  homeScreen.hidden = false;
+  gameScreen.hidden = true;
+  renderLessonSelection();
 }
 
-function render(action = "idle", roundAdvanced = false) {
-  renderBoard();
-  renderHero(action, roundAdvanced);
-  renderControls();
+function renderGameScreen(lesson, action = "idle", roundAdvanced = false) {
+  const state = ensureLessonState(lesson);
+
+  document.title = `${lesson.title} | YBM 영어 골든 벨`;
+  headerContext.textContent = `${lesson.title} 자료를 사용하는 중입니다. 홈으로 돌아가 다른 단원을 선택할 수 있습니다.`;
+  homeButton.hidden = false;
+  homeScreen.hidden = true;
+  gameScreen.hidden = false;
+
+  lessonKicker.textContent = `${lesson.gradeLabel} · ${lesson.unitLabel}`;
+  lessonTitle.textContent = `${lesson.title} 골든 벨`;
+  lessonDescription.textContent = lesson.gameDescription;
+  boardNote.textContent = lesson.usesStatusCardGridSlot
+    ? "Lesson 2는 5장의 그림 카드와 1개의 상태 카드로 카드판을 구성합니다."
+    : "Lesson 3는 6장의 그림 카드가 카드판 전체를 채웁니다.";
+
+  renderBoard(lesson, state);
+  renderHero(lesson, state, action, roundAdvanced);
 }
+
+function renderScreen() {
+  const screen = getScreenFromHash(window.location.hash);
+
+  if (screen.name === "lesson") {
+    const lesson = getLessonById(screen.lessonId);
+
+    if (lesson) {
+      renderGameScreen(lesson);
+      return;
+    }
+  }
+
+  renderHomeScreen();
+}
+
+lessonSelectionGrid.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-lesson-id]");
+
+  if (!button) {
+    return;
+  }
+
+  navigateToScreen({
+    name: "lesson",
+    lessonId: button.dataset.lessonId
+  });
+});
+
+homeButton.addEventListener("click", () => {
+  navigateToScreen({ name: "home" });
+});
 
 drawButton.addEventListener("click", () => {
-  const previousRound = state.round;
-  state = drawNextCard(state);
-  const roundAdvanced = state.round !== previousRound;
-  render("draw", roundAdvanced);
+  const lesson = getCurrentLesson();
+
+  if (!lesson) {
+    return;
+  }
+
+  const previousState = ensureLessonState(lesson);
+  const nextState = drawNextCard(previousState);
+  const roundAdvanced = nextState.round !== previousState.round;
+
+  setLessonState(lesson.id, nextState);
+  renderGameScreen(lesson, "draw", roundAdvanced);
   playDrawSound();
 });
 
 resetButton.addEventListener("click", () => {
-  state = resetCurrentRound(state);
-  render("reset");
-  stageNote.textContent = "초기화되었습니다. 다시 랜덤 뽑기를 눌러 시작하세요.";
-  liveStatus.textContent = "모든 카드 순서가 초기화되었습니다.";
+  const lesson = getCurrentLesson();
+
+  if (!lesson) {
+    return;
+  }
+
+  const nextState = resetCurrentRound(ensureLessonState(lesson));
+  setLessonState(lesson.id, nextState);
+  renderGameScreen(lesson, "reset");
+  stageNote.textContent = `${lesson.title}이 초기화되었습니다. 다시 랜덤 뽑기를 눌러 시작하세요.`;
+  liveStatus.textContent = `${lesson.title}의 카드 순서가 모두 초기화되었습니다.`;
 });
 
-render();
+window.addEventListener("hashchange", () => {
+  renderScreen();
+});
+
+renderScreen();

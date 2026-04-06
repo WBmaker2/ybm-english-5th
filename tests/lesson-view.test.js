@@ -1,0 +1,41 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+
+import { createGameState, drawNextCard } from "../src/game-state.js";
+import { getLessonById } from "../src/lesson-data.js";
+import { buildLessonViewModel } from "../src/lesson-view.js";
+
+test("buildLessonViewModel reserves a status slot for lesson 2", () => {
+  const lesson = getLessonById("lesson2");
+  const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
+
+  const viewModel = buildLessonViewModel({ lesson, state });
+
+  assert.equal(viewModel.boardItems.length, 6);
+  assert.equal(viewModel.boardItems.filter((item) => item.type === "card").length, 5);
+  assert.equal(viewModel.boardItems.at(-1).type, "status");
+});
+
+test("buildLessonViewModel uses all six grid slots for lesson 3 image cards", () => {
+  const lesson = getLessonById("lesson3");
+  const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
+
+  const viewModel = buildLessonViewModel({ lesson, state });
+
+  assert.equal(viewModel.boardItems.length, 6);
+  assert.equal(viewModel.boardItems.every((item) => item.type === "card"), true);
+});
+
+test("buildLessonViewModel updates the draw button label after a round is exhausted", () => {
+  const lesson = getLessonById("lesson3");
+  let state = createGameState(lesson.cards.map((card) => card.id), () => 0);
+
+  for (let count = 0; count < lesson.cards.length; count += 1) {
+    state = drawNextCard(state);
+  }
+
+  const viewModel = buildLessonViewModel({ lesson, state });
+
+  assert.equal(viewModel.drawButtonLabel, "다음 라운드 추첨");
+  assert.equal(viewModel.lastCardTitle.startsWith("그림"), true);
+});

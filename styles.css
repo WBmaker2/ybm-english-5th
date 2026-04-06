@@ -77,7 +77,42 @@ button {
   padding: 2rem clamp(1rem, 2vw, 2rem) 2.5rem;
 }
 
-.hero-header {
+.screen {
+  display: block;
+}
+
+.app-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 1.5rem 0;
+}
+
+.topbar-brand h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.7rem);
+  line-height: 0.95;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.topbar-actions {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: end;
+}
+
+.topbar-context {
+  margin: 0;
+  max-width: 26rem;
+  color: var(--muted);
+  line-height: 1.6;
+  text-align: right;
+}
+
+.hero-header,
+.home-hero {
   margin-bottom: 1.5rem;
   padding: 1.3rem 1.5rem 0;
 }
@@ -105,6 +140,129 @@ button {
   font-size: 1.05rem;
   line-height: 1.65;
   color: var(--muted);
+}
+
+.home-screen {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 0.75fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.home-copy h2 {
+  margin: 0;
+  font-size: clamp(2.4rem, 4vw, 4.1rem);
+  line-height: 1.02;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.home-highlight {
+  padding: 1.4rem;
+  border-radius: 1.8rem;
+  background:
+    radial-gradient(circle at top right, rgba(242, 184, 75, 0.32), transparent 38%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.94) 0%, rgba(244, 239, 227, 0.96) 100%);
+  border: 1px solid rgba(23, 50, 77, 0.08);
+  box-shadow: 0 20px 40px rgba(23, 50, 77, 0.08);
+}
+
+.home-highlight h3,
+.home-highlight p {
+  margin: 0;
+}
+
+.home-highlight h3 {
+  font-size: 1.6rem;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.home-highlight p:last-child {
+  margin-top: 0.7rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.lesson-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+.lesson-option {
+  overflow: hidden;
+  border: 1px solid rgba(23, 50, 77, 0.08);
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.lesson-option-media {
+  position: relative;
+  min-height: 15rem;
+  overflow: hidden;
+}
+
+.lesson-option-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lesson-option-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(23, 50, 77, 0.04) 0%, rgba(23, 50, 77, 0.44) 100%);
+}
+
+.lesson-count-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+  padding: 0.48rem 0.78rem;
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.92);
+  color: var(--bg-deep);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.lesson-option-body {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem 1.25rem 1.35rem;
+}
+
+.lesson-option-body h3,
+.lesson-option-body p {
+  margin: 0;
+}
+
+.lesson-option-body h3 {
+  font-size: 1.95rem;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.lesson-option-body p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.lesson-option-button {
+  justify-self: start;
+}
+
+.game-screen .hero-header h2 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.7rem);
+  line-height: 0.98;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .main-layout {
@@ -413,6 +571,14 @@ button {
   animation: hero-flare 900ms ease-out both;
 }
 
+.focus-status-slot {
+  margin-bottom: 1rem;
+}
+
+.focus-status-slot .status-card {
+  min-height: 0;
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -428,6 +594,11 @@ button {
   font-weight: 800;
   cursor: pointer;
   transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.action-button.compact {
+  min-width: 0;
+  padding: 0.8rem 1rem;
 }
 
 .action-button:hover {
@@ -485,6 +656,24 @@ button {
 }
 
 @media (max-width: 1100px) {
+  .app-topbar,
+  .home-hero {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .app-topbar {
+    display: grid;
+  }
+
+  .topbar-actions {
+    justify-items: start;
+  }
+
+  .topbar-context {
+    text-align: left;
+  }
+
   .main-layout {
     grid-template-columns: 1fr;
   }
@@ -503,7 +692,9 @@ button {
     padding-inline: 0.8rem;
   }
 
-  .hero-header {
+  .hero-header,
+  .app-topbar,
+  .home-hero {
     padding-inline: 0.25rem;
   }
 
@@ -520,6 +711,22 @@ button {
 
   .panel-note {
     text-align: left;
+  }
+
+  .lesson-selection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-option {
+    border-radius: 1.5rem;
+  }
+
+  .lesson-option-media {
+    min-height: 12rem;
+  }
+
+  .lesson-option-body h3 {
+    font-size: 1.5rem;
   }
 
   .card-grid {
