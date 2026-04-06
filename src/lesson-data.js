@@ -8,6 +8,7 @@ export const lessons = [
     gameDescription:
       "카드판의 그림 다섯 장을 보며 수업을 시작하고, 버튼을 눌러 랜덤으로 한 장씩 골든 벨 무대로 올려 보세요.",
     usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
     cards: [
       {
         id: "lesson2-card-1",
@@ -49,7 +50,8 @@ export const lessons = [
     homeDescription: "6장의 그림 카드를 한 번씩 랜덤으로 보여 주는 Lesson 3 자료",
     gameDescription:
       "세 줄 두 칸 카드판 전체를 사용해 Lesson 3 그림 여섯 장을 랜덤으로 보여 주세요.",
-    usesStatusCardGridSlot: false,
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 4,
     cards: [
       {
         id: "lesson3-card-1",

@@ -141,6 +141,7 @@ function renderStatusCardMarkup(lesson, state) {
 function renderBoard(lesson, state) {
   const viewModel = buildLessonViewModel({ lesson, state });
   const statusCardMarkup = renderStatusCardMarkup(lesson, state);
+  cardGrid.dataset.columns = String(viewModel.boardColumnCount);
 
   cardGrid.innerHTML = viewModel.boardItems
     .map((item) => {
@@ -238,6 +239,10 @@ function renderGameScreen(lesson, action = "idle", roundAdvanced = false) {
   boardNote.textContent = lesson.usesStatusCardGridSlot
     ? "Lesson 2는 5장의 그림 카드와 1개의 상태 카드로 카드판을 구성합니다."
     : "Lesson 3는 6장의 그림 카드가 카드판 전체를 채웁니다.";
+
+  if (lesson.id === "lesson3") {
+    boardNote.textContent = "Lesson 3는 6장의 그림 카드와 1개의 진행판을 같은 카드판 안에 배치합니다.";
+  }
 
   renderBoard(lesson, state);
   renderHero(lesson, state, action, roundAdvanced);

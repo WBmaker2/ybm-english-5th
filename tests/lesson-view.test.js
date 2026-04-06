@@ -16,14 +16,16 @@ test("buildLessonViewModel reserves a status slot for lesson 2", () => {
   assert.equal(viewModel.boardItems.at(-1).type, "status");
 });
 
-test("buildLessonViewModel uses all six grid slots for lesson 3 image cards", () => {
+test("buildLessonViewModel gives lesson 3 six cards plus one board status slot", () => {
   const lesson = getLessonById("lesson3");
   const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
 
   const viewModel = buildLessonViewModel({ lesson, state });
 
-  assert.equal(viewModel.boardItems.length, 6);
-  assert.equal(viewModel.boardItems.every((item) => item.type === "card"), true);
+  assert.equal(viewModel.boardItems.length, 7);
+  assert.equal(viewModel.boardItems.filter((item) => item.type === "card").length, 6);
+  assert.equal(viewModel.boardItems.at(-1).type, "status");
+  assert.equal(viewModel.boardColumnCount, 4);
 });
 
 test("buildLessonViewModel updates the draw button label after a round is exhausted", () => {
