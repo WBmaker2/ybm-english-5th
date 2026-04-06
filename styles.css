@@ -308,10 +308,6 @@ button {
   gap: 0.95rem;
 }
 
-.card-grid[data-columns="4"] {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
 .board-card,
 .status-card {
   position: relative;
@@ -735,10 +731,6 @@ button {
 
   .card-grid {
     gap: 0.6rem;
-  }
-
-  .card-grid[data-columns="4"] {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .board-card,

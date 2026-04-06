@@ -19,12 +19,12 @@ test("lesson 2 uses five cards and reserves one grid slot for status", () => {
   assert.match(lesson.cards[0].src, /lesson2-pictures\//);
 });
 
-test("lesson 3 uses six cards and adds a board status slot with a wider desktop grid", () => {
+test("lesson 3 keeps six image cards in a 3 x 2 board and places status as a seventh slot", () => {
   const lesson = getLessonById("lesson3");
 
   assert.equal(lesson.title, "Lesson 3");
   assert.equal(lesson.cards.length, 6);
   assert.equal(lesson.usesStatusCardGridSlot, true);
-  assert.equal(lesson.boardColumnCount, 4);
+  assert.equal(lesson.boardColumnCount, 3);
   assert.match(lesson.cards[0].src, /lesson3-pictures\//);
 });

@@ -16,7 +16,7 @@ test("buildLessonViewModel reserves a status slot for lesson 2", () => {
   assert.equal(viewModel.boardItems.at(-1).type, "status");
 });
 
-test("buildLessonViewModel gives lesson 3 six cards plus one board status slot", () => {
+test("buildLessonViewModel keeps lesson 3 at three columns and appends status after six cards", () => {
   const lesson = getLessonById("lesson3");
   const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
 
@@ -25,7 +25,7 @@ test("buildLessonViewModel gives lesson 3 six cards plus one board status slot",
   assert.equal(viewModel.boardItems.length, 7);
   assert.equal(viewModel.boardItems.filter((item) => item.type === "card").length, 6);
   assert.equal(viewModel.boardItems.at(-1).type, "status");
-  assert.equal(viewModel.boardColumnCount, 4);
+  assert.equal(viewModel.boardColumnCount, 3);
 });
 
 test("buildLessonViewModel updates the draw button label after a round is exhausted", () => {

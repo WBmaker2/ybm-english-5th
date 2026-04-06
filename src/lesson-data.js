@@ -51,7 +51,7 @@ export const lessons = [
     gameDescription:
       "세 줄 두 칸 카드판 전체를 사용해 Lesson 3 그림 여섯 장을 랜덤으로 보여 주세요.",
     usesStatusCardGridSlot: true,
-    boardColumnCount: 4,
+    boardColumnCount: 3,
     cards: [
       {
         id: "lesson3-card-1",
