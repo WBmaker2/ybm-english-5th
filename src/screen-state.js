@@ -5,6 +5,13 @@ export function createLessonScreen(lessonId) {
   };
 }
 
+export function createGradeScreen(gradeId) {
+  return {
+    name: "grade",
+    gradeId
+  };
+}
+
 export function getScreenFromHash(hash) {
   if (!hash || hash === "#" || hash === "#home") {
     return { name: "home" };
@@ -20,12 +27,24 @@ export function getScreenFromHash(hash) {
     }
   }
 
+  if (normalizedHash.startsWith("grade/")) {
+    const gradeId = normalizedHash.slice("grade/".length);
+
+    if (gradeId) {
+      return createGradeScreen(gradeId);
+    }
+  }
+
   return { name: "home" };
 }
 
 export function getHashForScreen(screen) {
   if (screen.name === "lesson") {
     return `#lesson/${screen.lessonId}`;
+  }
+
+  if (screen.name === "grade") {
+    return `#grade/${screen.gradeId}`;
   }
 
   return "#home";

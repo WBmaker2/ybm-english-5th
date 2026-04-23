@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  createGradeScreen,
   createLessonScreen,
   getHashForScreen,
   getScreenFromHash
@@ -19,7 +20,15 @@ test("getScreenFromHash parses lesson routes", () => {
   });
 });
 
+test("getScreenFromHash parses grade routes", () => {
+  assert.deepEqual(getScreenFromHash("#grade/grade4"), {
+    name: "grade",
+    gradeId: "grade4"
+  });
+});
+
 test("getHashForScreen builds stable lesson hashes", () => {
   assert.equal(getHashForScreen(createLessonScreen("lesson3")), "#lesson/lesson3");
+  assert.equal(getHashForScreen(createGradeScreen("grade5")), "#grade/grade5");
   assert.equal(getHashForScreen({ name: "home" }), "#home");
 });

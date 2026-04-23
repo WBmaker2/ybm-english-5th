@@ -1,6 +1,6 @@
 import { createGameState, drawNextCard, resetCurrentRound } from "./game-state.js";
 import { createHeroMediaView } from "./hero-view.js";
-import { lessons, getLessonById } from "./lesson-data.js";
+import { grades, getGradeById, getLessonById } from "./lesson-data.js";
 import { buildLessonViewModel } from "./lesson-view.js";
 import { getHashForScreen, getScreenFromHash } from "./screen-state.js";
 import { createDrawSoundPlayer } from "./sound.js";
@@ -10,9 +10,16 @@ const gameScreen = document.querySelector("#game-screen");
 const lessonSelectionGrid = document.querySelector("#lesson-selection-grid");
 const homeButton = document.querySelector("#home-button");
 const headerContext = document.querySelector("#header-context");
+const homeKicker = document.querySelector("#home-kicker");
+const homeTitle = document.querySelector("#home-title");
+const homeIntro = document.querySelector("#home-intro");
+const homeHighlightLabel = document.querySelector("#home-highlight-label");
+const homeHighlightTitle = document.querySelector("#home-highlight-title");
+const homeHighlightBody = document.querySelector("#home-highlight-body");
 const lessonKicker = document.querySelector("#lesson-kicker");
 const lessonTitle = document.querySelector("#lesson-title");
 const lessonDescription = document.querySelector("#lesson-description");
+const boardTitle = document.querySelector("#board-title");
 const boardNote = document.querySelector("#board-note");
 const cardGrid = document.querySelector("#card-grid");
 const drawButton = document.querySelector("#draw-button");
@@ -75,8 +82,47 @@ function navigateToScreen(screen) {
   window.location.hash = nextHash;
 }
 
-function renderLessonSelection() {
-  lessonSelectionGrid.innerHTML = lessons
+function getGradePreviewCard(grade) {
+  return grade.lessons[0]?.cards[0] || null;
+}
+
+function renderGradeSelection() {
+  lessonSelectionGrid.classList.add("is-grade-selection");
+  lessonSelectionGrid.innerHTML = grades
+    .map((grade) => {
+      const previewCard = getGradePreviewCard(grade);
+
+      return `
+        <article class="lesson-option grade-option">
+          <div class="lesson-option-media">
+            <span class="lesson-count-badge">${grade.lessons.length} lesson</span>
+            ${
+              previewCard
+                ? `<img src="${previewCard.src}" alt="${grade.title} 대표 카드" />`
+                : ""
+            }
+          </div>
+          <div class="lesson-option-body">
+            <p class="section-label">${grade.gradeLabel}</p>
+            <h3>${grade.title}</h3>
+            <p>${grade.homeDescription}</p>
+            <button
+              class="action-button primary lesson-option-button"
+              type="button"
+              data-grade-id="${grade.id}"
+            >
+              ${grade.title} 선택
+            </button>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderLessonSelection(grade) {
+  lessonSelectionGrid.classList.remove("is-grade-selection");
+  lessonSelectionGrid.innerHTML = grade.lessons
     .map(
       (lesson) => `
         <article class="lesson-option">
@@ -217,11 +263,35 @@ function renderHero(lesson, state, action = "idle", roundAdvanced = false) {
 
 function renderHomeScreen() {
   document.title = "YBM 영어 골든 벨";
-  headerContext.textContent = "단원을 선택해 Lesson 2와 Lesson 3 자료를 바로 사용할 수 있습니다.";
+  headerContext.textContent = "학년을 선택한 뒤 단원별 골든 벨 카드 게임을 시작할 수 있습니다.";
+  homeKicker.textContent = "Grade Select";
+  homeTitle.textContent = "학년을 선택하고 골든 벨 수업을 시작하세요.";
+  homeIntro.textContent =
+    "4학년은 3단원 What time is it? 카드 게임으로, 5학년은 기존 단원 선택 화면으로 이어집니다.";
+  homeHighlightLabel.textContent = "Ready Set";
+  homeHighlightTitle.textContent = "학년별 자료를 같은 규칙으로";
+  homeHighlightBody.textContent =
+    "랜덤 뽑기, 중앙 무대, 효과음, 초기화 흐름은 그대로 유지하고 카드 자료만 단원에 맞게 바뀝니다.";
   homeButton.hidden = true;
   homeScreen.hidden = false;
   gameScreen.hidden = true;
-  renderLessonSelection();
+  renderGradeSelection();
+}
+
+function renderGradeScreen(grade) {
+  document.title = `${grade.title} | YBM 영어 골든 벨`;
+  headerContext.textContent = `${grade.title} 자료를 선택하는 중입니다. 처음 화면으로 돌아가 다른 학년을 선택할 수 있습니다.`;
+  homeKicker.textContent = "Lesson Select";
+  homeTitle.textContent = grade.lessonSelectionTitle;
+  homeIntro.textContent = grade.lessonSelectionDescription;
+  homeHighlightLabel.textContent = grade.unitLabel;
+  homeHighlightTitle.textContent = `${grade.title} 골든 벨 자료`;
+  homeHighlightBody.textContent =
+    "원하는 단원을 누르면 기존 랜덤 뽑기 화면으로 바로 이동합니다.";
+  homeButton.hidden = false;
+  homeScreen.hidden = false;
+  gameScreen.hidden = true;
+  renderLessonSelection(grade);
 }
 
 function renderGameScreen(lesson, action = "idle", roundAdvanced = false) {
@@ -236,13 +306,8 @@ function renderGameScreen(lesson, action = "idle", roundAdvanced = false) {
   lessonKicker.textContent = `${lesson.gradeLabel} · ${lesson.unitLabel}`;
   lessonTitle.textContent = `${lesson.title} 골든 벨`;
   lessonDescription.textContent = lesson.gameDescription;
-  boardNote.textContent = lesson.usesStatusCardGridSlot
-    ? "Lesson 2는 5장의 그림 카드와 1개의 상태 카드로 카드판을 구성합니다."
-    : "Lesson 3는 6장의 그림 카드가 카드판 전체를 채웁니다.";
-
-  if (lesson.id === "lesson3") {
-    boardNote.textContent = "Lesson 3는 6장의 그림 카드와 1개의 진행판을 같은 카드판 안에 배치합니다.";
-  }
+  boardTitle.textContent = lesson.boardTitle || `${lesson.cards.length}장 카드판`;
+  boardNote.textContent = lesson.boardNote;
 
   renderBoard(lesson, state);
   renderHero(lesson, state, action, roundAdvanced);
@@ -260,10 +325,29 @@ function renderScreen() {
     }
   }
 
+  if (screen.name === "grade") {
+    const grade = getGradeById(screen.gradeId);
+
+    if (grade) {
+      renderGradeScreen(grade);
+      return;
+    }
+  }
+
   renderHomeScreen();
 }
 
 lessonSelectionGrid.addEventListener("click", (event) => {
+  const gradeButton = event.target.closest("[data-grade-id]");
+
+  if (gradeButton) {
+    navigateToScreen({
+      name: "grade",
+      gradeId: gradeButton.dataset.gradeId
+    });
+    return;
+  }
+
   const button = event.target.closest("[data-lesson-id]");
 
   if (!button) {

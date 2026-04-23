@@ -203,14 +203,24 @@ button {
 
 .lesson-option-media {
   position: relative;
-  min-height: 15rem;
+  height: 16rem;
   overflow: hidden;
 }
 
 .lesson-option-media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 0.7rem;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.grade-option .lesson-option-media {
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.grade-option .lesson-option-media img {
+  padding: 0.7rem;
 }
 
 .lesson-option-media::after {
@@ -342,12 +352,15 @@ button {
 
 .card-image-shell {
   height: 100%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .card-image-shell img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .card-footer {
@@ -479,7 +492,7 @@ button {
   gap: 1.15rem;
   padding: 1rem;
   border-radius: 1.8rem;
-  min-height: 36rem;
+  min-height: 24rem;
   background:
     radial-gradient(circle at top, rgba(242, 184, 75, 0.36), transparent 24%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 245, 234, 0.96) 100%);
@@ -489,7 +502,7 @@ button {
 
 .hero-visual {
   position: relative;
-  min-height: 26rem;
+  min-height: 16rem;
   border-radius: 1.45rem;
   overflow: hidden;
   background:
@@ -508,10 +521,11 @@ button {
 }
 
 .hero-image {
-  width: min(88%, 29rem);
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  width: min(94%, 31rem);
+  aspect-ratio: 553 / 360;
+  object-fit: contain;
   border-radius: 1.4rem;
+  background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 30px 60px rgba(23, 50, 77, 0.22);
 }
 
@@ -584,6 +598,10 @@ button {
   flex-wrap: wrap;
   gap: 0.85rem;
   margin-top: 1rem;
+}
+
+.focus-panel > .controls {
+  margin: 0 0 1rem;
 }
 
 .action-button {
@@ -722,7 +740,7 @@ button {
   }
 
   .lesson-option-media {
-    min-height: 12rem;
+    height: 12rem;
   }
 
   .lesson-option-body h3 {
