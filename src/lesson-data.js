@@ -157,6 +157,48 @@ const fifthGradeLessons = [
   }
 ];
 
+const sixthGradeLessons = [
+  {
+    id: "grade6-lesson4",
+    title: "4단원 What's wrong?",
+    gradeLabel: "YBM 초등영어 6학년",
+    unitLabel: "4단원",
+    homeDescription: "아픈 증상을 나타내는 그림 카드 4장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "몸 상태를 묻고 답하는 그림 카드 네 장을 보며 수업을 시작하고, 버튼을 눌러 한 장씩 골든 벨 무대로 올려 보세요.",
+    boardTitle: "4장 증상 카드판",
+    boardNote: "6학년 4단원은 fever, runny nose, toothache, cold 그림 카드 4장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade6-lesson4-card-1",
+        title: "fever",
+        src: "./6th_grade/lesson4 What's wrong/chrome_4CSEKiNqTP.png",
+        alt: "fever 열이 나는 증상 카드"
+      },
+      {
+        id: "grade6-lesson4-card-2",
+        title: "runny nose",
+        src: "./6th_grade/lesson4 What's wrong/chrome_laS7krAU7f.png",
+        alt: "runny nose 콧물이 나는 증상 카드"
+      },
+      {
+        id: "grade6-lesson4-card-3",
+        title: "toothache",
+        src: "./6th_grade/lesson4 What's wrong/chrome_tjsRhL513w.png",
+        alt: "toothache 이가 아픈 증상 카드"
+      },
+      {
+        id: "grade6-lesson4-card-4",
+        title: "cold",
+        src: "./6th_grade/lesson4 What's wrong/chrome_wriN9gbMcK.png",
+        alt: "cold 감기에 걸린 증상 카드"
+      }
+    ]
+  }
+];
+
 export const grades = [
   {
     id: "grade4",
@@ -179,6 +221,17 @@ export const grades = [
     lessonSelectionDescription:
       "기존 Lesson 2와 Lesson 3 자료를 그대로 선택해서 사용할 수 있습니다.",
     lessons: fifthGradeLessons
+  },
+  {
+    id: "grade6",
+    title: "6학년",
+    gradeLabel: "YBM 초등영어 6학년",
+    unitLabel: "What's wrong?",
+    homeDescription: "4단원 증상 표현 카드 게임으로 들어갑니다.",
+    lessonSelectionTitle: "6학년 단원을 선택하세요.",
+    lessonSelectionDescription:
+      "현재는 4단원 What's wrong? 그림 카드 4장을 사용할 수 있습니다.",
+    lessons: sixthGradeLessons
   }
 ];
 

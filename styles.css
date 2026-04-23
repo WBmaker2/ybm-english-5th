@@ -193,6 +193,10 @@ button {
   gap: 1.15rem;
 }
 
+.lesson-selection-grid.is-grade-selection {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .lesson-option {
   overflow: hidden;
   border: 1px solid rgba(23, 50, 77, 0.08);
@@ -217,6 +221,10 @@ button {
 
 .grade-option .lesson-option-media {
   background: rgba(255, 255, 255, 0.84);
+}
+
+.grade-option {
+  cursor: pointer;
 }
 
 .grade-option .lesson-option-media img {
@@ -266,6 +274,21 @@ button {
 
 .lesson-option-button {
   justify-self: start;
+}
+
+.grade-media-button {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.85rem;
+  z-index: 2;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 0.95rem;
+  background: linear-gradient(135deg, var(--gold) 0%, #ffd98c 100%);
+  color: #332000;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(23, 50, 77, 0.2);
 }
 
 .game-screen .hero-header h2 {
@@ -674,8 +697,7 @@ button {
 }
 
 @media (max-width: 1100px) {
-  .app-topbar,
-  .home-hero {
+  .app-topbar {
     grid-template-columns: 1fr;
     align-items: start;
   }
@@ -702,6 +724,35 @@ button {
 
   .hero-card {
     min-height: 0;
+  }
+
+  .lesson-selection-grid.is-grade-selection {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lesson-selection-grid.is-grade-selection .lesson-option-media {
+    height: 7.5rem;
+  }
+
+  .lesson-selection-grid.is-grade-selection .lesson-option-body {
+    gap: 0.45rem;
+    padding: 0.85rem 0.95rem 1rem;
+  }
+
+  .lesson-selection-grid.is-grade-selection .lesson-option-body h3 {
+    font-size: 1.45rem;
+  }
+
+  .lesson-selection-grid.is-grade-selection .lesson-option-body p {
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .lesson-selection-grid.is-grade-selection .grade-media-button {
+    right: 0.65rem;
+    bottom: 0.55rem;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.82rem;
   }
 }
 
@@ -732,6 +783,10 @@ button {
   }
 
   .lesson-selection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-selection-grid.is-grade-selection {
     grid-template-columns: 1fr;
   }
 

@@ -9,10 +9,10 @@ import {
   lessons
 } from "../src/lesson-data.js";
 
-test("grades exposes 4th grade and 5th grade in landing order", () => {
+test("grades exposes 4th grade, 5th grade, and 6th grade in landing order", () => {
   assert.deepEqual(
     grades.map((grade) => grade.id),
-    ["grade4", "grade5"]
+    ["grade4", "grade5", "grade6"]
   );
 });
 
@@ -38,8 +38,23 @@ test("lessons keeps 5th grade lesson 2 and lesson 3 available", () => {
   );
   assert.deepEqual(
     lessons.map((lesson) => lesson.id),
-    ["grade4-lesson3", "lesson2", "lesson3"]
+    ["grade4-lesson3", "lesson2", "lesson3", "grade6-lesson4"]
   );
+});
+
+test("6th grade exposes the What's wrong lesson with four picture cards", () => {
+  const grade = getGradeById("grade6");
+  const lesson = getLessonById("grade6-lesson4");
+
+  assert.equal(grade.lessons.length, 1);
+  assert.deepEqual(
+    getLessonsByGradeId("grade6").map((item) => item.id),
+    ["grade6-lesson4"]
+  );
+  assert.equal(lesson.title, "4단원 What's wrong?");
+  assert.equal(lesson.cards.length, 4);
+  assert.equal(lesson.usesStatusCardGridSlot, true);
+  assert.match(lesson.cards[0].src, /6th_grade\/lesson4 What's wrong\/chrome_4CSEKiNqTP\.png/);
 });
 
 test("lesson 2 uses five cards and reserves one grid slot for status", () => {

@@ -93,9 +93,16 @@ function renderGradeSelection() {
       const previewCard = getGradePreviewCard(grade);
 
       return `
-        <article class="lesson-option grade-option">
+        <article class="lesson-option grade-option" data-grade-id="${grade.id}">
           <div class="lesson-option-media">
             <span class="lesson-count-badge">${grade.lessons.length} lesson</span>
+            <button
+              class="grade-media-button"
+              type="button"
+              data-grade-id="${grade.id}"
+            >
+              ${grade.title} 선택
+            </button>
             ${
               previewCard
                 ? `<img src="${previewCard.src}" alt="${grade.title} 대표 카드" />`
@@ -106,13 +113,6 @@ function renderGradeSelection() {
             <p class="section-label">${grade.gradeLabel}</p>
             <h3>${grade.title}</h3>
             <p>${grade.homeDescription}</p>
-            <button
-              class="action-button primary lesson-option-button"
-              type="button"
-              data-grade-id="${grade.id}"
-            >
-              ${grade.title} 선택
-            </button>
           </div>
         </article>
       `;
@@ -267,7 +267,7 @@ function renderHomeScreen() {
   homeKicker.textContent = "Grade Select";
   homeTitle.textContent = "학년을 선택하고 골든 벨 수업을 시작하세요.";
   homeIntro.textContent =
-    "4학년은 3단원 What time is it? 카드 게임으로, 5학년은 기존 단원 선택 화면으로 이어집니다.";
+    "4학년, 5학년, 6학년 자료를 학년별로 선택해 같은 방식의 랜덤 카드 게임으로 이어갑니다.";
   homeHighlightLabel.textContent = "Ready Set";
   homeHighlightTitle.textContent = "학년별 자료를 같은 규칙으로";
   homeHighlightBody.textContent =
