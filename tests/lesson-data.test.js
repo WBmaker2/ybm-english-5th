@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
 
 import {
   getGradeById,
@@ -46,30 +47,92 @@ test("4th grade exposes the What time is it lesson with seven PDF cards", () => 
   assert.match(lesson.cards[0].src, /4th_grade\/lesson3 What time is it\/cards\/card-1\.png/);
 });
 
-test("lessons keeps 5th grade lesson 2 and lesson 3 available", () => {
+test("lessons keeps 5th grade lesson 2, lesson 3, and lesson 5 available", () => {
   assert.deepEqual(
     getLessonsByGradeId("grade5").map((lesson) => lesson.id),
-    ["lesson2", "lesson3"]
+    ["lesson2", "lesson3", "grade5-lesson5"]
   );
   assert.deepEqual(
     lessons.map((lesson) => lesson.id),
-    ["grade3-lesson3", "grade4-lesson3", "lesson2", "lesson3", "grade6-lesson4"]
+    [
+      "grade3-lesson3",
+      "grade4-lesson3",
+      "lesson2",
+      "lesson3",
+      "grade5-lesson5",
+      "grade6-lesson4",
+      "grade6-lesson5"
+    ]
   );
+});
+
+test("5th grade exposes lesson 5 with five object picture cards from the PPT", () => {
+  const grade = getGradeById("grade5");
+  const lesson = getLessonById("grade5-lesson5");
+
+  assert.equal(grade.lessons.length, 3);
+  assert.equal(lesson.title, "Lesson 5");
+  assert.equal(lesson.cards.length, 5);
+  assert.equal(lesson.usesStatusCardGridSlot, true);
+  assert.equal(lesson.boardColumnCount, 3);
+  assert.deepEqual(
+    lesson.cards.map((card) => card.title),
+    ["bottle", "cell phone", "umbrella", "glove", "watch"]
+  );
+  assert.match(lesson.cards[0].src, /5th_grade\/lesson5\/cards\/card-1\.png/);
 });
 
 test("6th grade exposes the What's wrong lesson with four picture cards", () => {
   const grade = getGradeById("grade6");
   const lesson = getLessonById("grade6-lesson4");
 
-  assert.equal(grade.lessons.length, 1);
+  assert.equal(grade.lessons.length, 2);
   assert.deepEqual(
     getLessonsByGradeId("grade6").map((item) => item.id),
-    ["grade6-lesson4"]
+    ["grade6-lesson4", "grade6-lesson5"]
   );
   assert.equal(lesson.title, "4단원 What's wrong?");
   assert.equal(lesson.cards.length, 4);
   assert.equal(lesson.usesStatusCardGridSlot, true);
   assert.match(lesson.cards[0].src, /6th_grade\/lesson4 What's wrong\/chrome_4CSEKiNqTP\.png/);
+});
+
+test("6th grade exposes lesson 5 with seven picture cards from the revised PPT", () => {
+  const lesson = getLessonById("grade6-lesson5");
+
+  assert.equal(lesson?.title, "5단원 Who painted this picture?");
+  assert.equal(lesson?.cards.length, 7);
+  assert.equal(lesson?.usesStatusCardGridSlot, true);
+  assert.equal(lesson?.boardColumnCount, 3);
+  assert.deepEqual(
+    lesson?.cards.map((card) => card.title),
+    [
+      "Picture 1",
+      "Picture 2",
+      "Picture 3",
+      "Picture 4",
+      "Picture 5",
+      "Picture 6",
+      "Picture 7"
+    ]
+  );
+  const expectedSources = Array.from(
+    { length: 7 },
+    (_, index) =>
+      `./6th_grade/lesson5 Who painted this picture/cards/card-${index + 1}.png`
+  );
+
+  assert.deepEqual(
+    lesson?.cards.map((card) => card.src),
+    expectedSources
+  );
+  for (const source of expectedSources) {
+    assert.equal(
+      existsSync(new URL(`../${source.slice(2)}`, import.meta.url)),
+      true,
+      `${source} should exist`
+    );
+  }
 });
 
 test("lesson 2 uses five cards and reserves one grid slot for status", () => {

@@ -40,6 +40,18 @@ test("buildLessonViewModel keeps lesson 3 at three columns and appends status af
   assert.equal(viewModel.boardColumnCount, 3);
 });
 
+test("buildLessonViewModel keeps 5th grade lesson 5 at five object cards plus grid status", () => {
+  const lesson = getLessonById("grade5-lesson5");
+  const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
+
+  const viewModel = buildLessonViewModel({ lesson, state });
+
+  assert.equal(viewModel.boardItems.length, 6);
+  assert.equal(viewModel.boardItems.filter((item) => item.type === "card").length, 5);
+  assert.equal(viewModel.boardItems.at(-1).type, "status");
+  assert.equal(viewModel.boardColumnCount, 3);
+});
+
 test("buildLessonViewModel keeps 4th grade lesson 3 at seven image cards plus grid status", () => {
   const lesson = getLessonById("grade4-lesson3");
   const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
@@ -60,6 +72,18 @@ test("buildLessonViewModel keeps 6th grade lesson 4 at four image cards plus gri
 
   assert.equal(viewModel.boardItems.length, 5);
   assert.equal(viewModel.boardItems.filter((item) => item.type === "card").length, 4);
+  assert.equal(viewModel.boardItems.at(-1).type, "status");
+  assert.equal(viewModel.boardColumnCount, 3);
+});
+
+test("buildLessonViewModel keeps 6th grade lesson 5 at seven image cards plus grid status", () => {
+  const lesson = getLessonById("grade6-lesson5");
+  const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
+
+  const viewModel = buildLessonViewModel({ lesson, state });
+
+  assert.equal(viewModel.boardItems.length, 8);
+  assert.equal(viewModel.boardItems.filter((item) => item.type === "card").length, 7);
   assert.equal(viewModel.boardItems.at(-1).type, "status");
   assert.equal(viewModel.boardColumnCount, 3);
 });
