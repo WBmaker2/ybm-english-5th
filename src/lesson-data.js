@@ -1,3 +1,45 @@
+const thirdGradeLessons = [
+  {
+    id: "grade3-lesson3",
+    title: "Lesson 3",
+    gradeLabel: "YBM 초등영어 3학년",
+    unitLabel: "3단원 Mission 1",
+    homeDescription: "PDF 활동자료에서 추출한 동작 카드 4장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "동작 그림 카드 4장을 보고 표현을 말해 보며, 버튼을 눌러 한 장씩 무대로 뽑아 보세요.",
+    boardTitle: "4장 동작 카드판",
+    boardNote: "3학년 Lesson 3 Mission 1 PDF의 2 x 2 카드 4장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade3-lesson3-card-1",
+        title: "Open the door",
+        src: "./3rd_grade/lesson3/cards/card-1.png",
+        alt: "문을 여는 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-card-2",
+        title: "Run",
+        src: "./3rd_grade/lesson3/cards/card-2.png",
+        alt: "달리는 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-card-3",
+        title: "Look",
+        src: "./3rd_grade/lesson3/cards/card-3.png",
+        alt: "보는 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-card-4",
+        title: "Sit down",
+        src: "./3rd_grade/lesson3/cards/card-4.png",
+        alt: "앉는 동작 카드"
+      }
+    ]
+  }
+];
+
 const fourthGradeLessons = [
   {
     id: "grade4-lesson3",
@@ -200,6 +242,17 @@ const sixthGradeLessons = [
 ];
 
 export const grades = [
+  {
+    id: "grade3",
+    title: "3학년",
+    gradeLabel: "YBM 초등영어 3학년",
+    unitLabel: "Lesson 3",
+    homeDescription: "새로 추가된 3단원 Mission 1 동작 카드 게임으로 들어갑니다.",
+    lessonSelectionTitle: "3학년 단원을 선택하세요",
+    lessonSelectionDescription:
+      "현재는 Lesson 3 Mission 1 활동자료 카드 4장을 사용할 수 있습니다.",
+    lessons: thirdGradeLessons
+  },
   {
     id: "grade4",
     title: "4학년",

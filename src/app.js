@@ -267,7 +267,7 @@ function renderHomeScreen() {
   homeKicker.textContent = "Grade Select";
   homeTitle.textContent = "학년을 선택하고 골든 벨 수업을 시작하세요.";
   homeIntro.textContent =
-    "4학년, 5학년, 6학년 자료를 학년별로 선택해 같은 방식의 랜덤 카드 게임으로 이어갑니다.";
+    "3학년, 4학년, 5학년, 6학년 자료를 학년별로 선택해 같은 방식의 랜덤 카드 게임으로 이어갑니다.";
   homeHighlightLabel.textContent = "Ready Set";
   homeHighlightTitle.textContent = "학년별 자료를 같은 규칙으로";
   homeHighlightBody.textContent =

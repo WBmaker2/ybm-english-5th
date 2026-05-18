@@ -9,11 +9,26 @@ import {
   lessons
 } from "../src/lesson-data.js";
 
-test("grades exposes 4th grade, 5th grade, and 6th grade in landing order", () => {
+test("grades exposes 3rd grade, 4th grade, 5th grade, and 6th grade in landing order", () => {
   assert.deepEqual(
     grades.map((grade) => grade.id),
-    ["grade4", "grade5", "grade6"]
+    ["grade3", "grade4", "grade5", "grade6"]
   );
+});
+
+test("3rd grade exposes lesson 3 with four PDF cards", () => {
+  const grade = getGradeById("grade3");
+  const lesson = getLessonById("grade3-lesson3");
+
+  assert.equal(grade.lessons.length, 1);
+  assert.deepEqual(
+    getLessonsByGradeId("grade3").map((item) => item.id),
+    ["grade3-lesson3"]
+  );
+  assert.equal(lesson.title, "Lesson 3");
+  assert.equal(lesson.cards.length, 4);
+  assert.equal(lesson.usesStatusCardGridSlot, true);
+  assert.match(lesson.cards[0].src, /3rd_grade\/lesson3\/cards\/card-1\.png/);
 });
 
 test("4th grade exposes the What time is it lesson with seven PDF cards", () => {
@@ -38,7 +53,7 @@ test("lessons keeps 5th grade lesson 2 and lesson 3 available", () => {
   );
   assert.deepEqual(
     lessons.map((lesson) => lesson.id),
-    ["grade4-lesson3", "lesson2", "lesson3", "grade6-lesson4"]
+    ["grade3-lesson3", "grade4-lesson3", "lesson2", "lesson3", "grade6-lesson4"]
   );
 });
 
