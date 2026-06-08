@@ -17,19 +17,53 @@ test("grades exposes 3rd grade, 4th grade, 5th grade, and 6th grade in landing o
   );
 });
 
-test("3rd grade exposes lesson 3 with four PDF cards", () => {
+test("3rd grade exposes lesson 3 missions with PDF cards", () => {
   const grade = getGradeById("grade3");
   const lesson = getLessonById("grade3-lesson3");
+  const mission2 = getLessonById("grade3-lesson3-mission2");
 
-  assert.equal(grade.lessons.length, 1);
+  assert.equal(grade.lessons.length, 2);
   assert.deepEqual(
     getLessonsByGradeId("grade3").map((item) => item.id),
-    ["grade3-lesson3"]
+    ["grade3-lesson3", "grade3-lesson3-mission2"]
   );
-  assert.equal(lesson.title, "Lesson 3");
+  assert.equal(lesson.title, "Lesson 3 Mission 1");
   assert.equal(lesson.cards.length, 4);
   assert.equal(lesson.usesStatusCardGridSlot, true);
   assert.match(lesson.cards[0].src, /3rd_grade\/lesson3\/cards\/card-1\.png/);
+
+  assert.equal(mission2.title, "Lesson 3 Mission 2");
+  assert.equal(mission2.cards.length, 7);
+  assert.equal(mission2.usesStatusCardGridSlot, true);
+  assert.equal(mission2.boardColumnCount, 3);
+  assert.deepEqual(
+    mission2.cards.map((card) => card.title),
+    [
+      "Go away",
+      "Close the door",
+      "Stand up",
+      "Sit down",
+      "Open the door",
+      "Run",
+      "Look"
+    ]
+  );
+  const expectedSources = Array.from(
+    { length: 7 },
+    (_, index) => `./3rd_grade/lesson3/mission2/cards/card-${index + 1}.png`
+  );
+
+  assert.deepEqual(
+    mission2.cards.map((card) => card.src),
+    expectedSources
+  );
+  for (const source of expectedSources) {
+    assert.equal(
+      existsSync(new URL(`../${source.slice(2)}`, import.meta.url)),
+      true,
+      `${source} should exist`
+    );
+  }
 });
 
 test("4th grade exposes the What time is it lesson with seven PDF cards", () => {
@@ -56,6 +90,7 @@ test("lessons keeps 5th grade lesson 2, lesson 3, and lesson 5 available", () =>
     lessons.map((lesson) => lesson.id),
     [
       "grade3-lesson3",
+      "grade3-lesson3-mission2",
       "grade4-lesson3",
       "lesson2",
       "lesson3",

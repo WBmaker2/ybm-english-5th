@@ -1,7 +1,7 @@
 const thirdGradeLessons = [
   {
     id: "grade3-lesson3",
-    title: "Lesson 3",
+    title: "Lesson 3 Mission 1",
     gradeLabel: "YBM 초등영어 3학년",
     unitLabel: "3단원 Mission 1",
     homeDescription: "PDF 활동자료에서 추출한 동작 카드 4장으로 진행하는 랜덤 뽑기 게임",
@@ -35,6 +35,63 @@ const thirdGradeLessons = [
         title: "Sit down",
         src: "./3rd_grade/lesson3/cards/card-4.png",
         alt: "앉는 동작 카드"
+      }
+    ]
+  },
+  {
+    id: "grade3-lesson3-mission2",
+    title: "Lesson 3 Mission 2",
+    gradeLabel: "YBM 초등영어 3학년",
+    unitLabel: "3단원 Mission 2",
+    homeDescription: "PDF 활동자료에서 추출한 동작 카드 7장으로 진행하는 두 번째 랜덤 뽑기 게임",
+    gameDescription:
+      "Mission 2 동작 그림 카드 7장을 보고 표현을 말해 보며, 버튼을 눌러 한 장씩 무대로 뽑아 보세요.",
+    boardTitle: "7장 동작 카드판",
+    boardNote: "3학년 Lesson 3 Mission 2 PDF의 7장 동작 카드를 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade3-lesson3-mission2-card-1",
+        title: "Go away",
+        src: "./3rd_grade/lesson3/mission2/cards/card-1.png",
+        alt: "여자아이와 강아지가 있는 Go away 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-mission2-card-2",
+        title: "Close the door",
+        src: "./3rd_grade/lesson3/mission2/cards/card-2.png",
+        alt: "문을 닫는 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-mission2-card-3",
+        title: "Stand up",
+        src: "./3rd_grade/lesson3/mission2/cards/card-3.png",
+        alt: "일어서는 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-mission2-card-4",
+        title: "Sit down",
+        src: "./3rd_grade/lesson3/mission2/cards/card-4.png",
+        alt: "앉는 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-mission2-card-5",
+        title: "Open the door",
+        src: "./3rd_grade/lesson3/mission2/cards/card-5.png",
+        alt: "문을 여는 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-mission2-card-6",
+        title: "Run",
+        src: "./3rd_grade/lesson3/mission2/cards/card-6.png",
+        alt: "달리는 동작 카드"
+      },
+      {
+        id: "grade3-lesson3-mission2-card-7",
+        title: "Look",
+        src: "./3rd_grade/lesson3/mission2/cards/card-7.png",
+        alt: "보는 동작 카드"
       }
     ]
   }
@@ -349,10 +406,10 @@ export const grades = [
     title: "3학년",
     gradeLabel: "YBM 초등영어 3학년",
     unitLabel: "Lesson 3",
-    homeDescription: "새로 추가된 3단원 Mission 1 동작 카드 게임으로 들어갑니다.",
+    homeDescription: "3단원 Mission 1과 Mission 2 동작 카드 게임으로 들어갑니다.",
     lessonSelectionTitle: "3학년 단원을 선택하세요",
     lessonSelectionDescription:
-      "현재는 Lesson 3 Mission 1 활동자료 카드 4장을 사용할 수 있습니다.",
+      "Lesson 3 Mission 1 활동자료 카드 4장과 Mission 2 활동자료 카드 7장을 사용할 수 있습니다.",
     lessons: thirdGradeLessons
   },
   {

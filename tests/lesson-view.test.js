@@ -28,6 +28,18 @@ test("buildLessonViewModel keeps 3rd grade lesson 3 at four image cards plus gri
   assert.equal(viewModel.boardColumnCount, 3);
 });
 
+test("buildLessonViewModel keeps 3rd grade lesson 3 mission 2 at seven image cards plus grid status", () => {
+  const lesson = getLessonById("grade3-lesson3-mission2");
+  const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
+
+  const viewModel = buildLessonViewModel({ lesson, state });
+
+  assert.equal(viewModel.boardItems.length, 8);
+  assert.equal(viewModel.boardItems.filter((item) => item.type === "card").length, 7);
+  assert.equal(viewModel.boardItems.at(-1).type, "status");
+  assert.equal(viewModel.boardColumnCount, 3);
+});
+
 test("buildLessonViewModel keeps lesson 3 at three columns and appends status after six cards", () => {
   const lesson = getLessonById("lesson3");
   const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
