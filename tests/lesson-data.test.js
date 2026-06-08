@@ -30,6 +30,10 @@ test("3rd grade exposes lesson 3 missions with PDF cards", () => {
   assert.equal(lesson.title, "Lesson 3 Mission 1");
   assert.equal(lesson.cards.length, 4);
   assert.equal(lesson.usesStatusCardGridSlot, true);
+  assert.deepEqual(
+    lesson.cards.map((card) => card.title),
+    ["Open the door", "Don't run", "Look", "Sit down"]
+  );
   assert.match(lesson.cards[0].src, /3rd_grade\/lesson3\/cards\/card-1\.png/);
 
   assert.equal(mission2.title, "Lesson 3 Mission 2");
@@ -39,12 +43,12 @@ test("3rd grade exposes lesson 3 missions with PDF cards", () => {
   assert.deepEqual(
     mission2.cards.map((card) => card.title),
     [
-      "Go away",
+      "Come here",
       "Close the door",
       "Stand up",
       "Sit down",
       "Open the door",
-      "Run",
+      "Don't run",
       "Look"
     ]
   );

@@ -20,9 +20,9 @@ const thirdGradeLessons = [
       },
       {
         id: "grade3-lesson3-card-2",
-        title: "Run",
+        title: "Don't run",
         src: "./3rd_grade/lesson3/cards/card-2.png",
-        alt: "달리는 동작 카드"
+        alt: "뛰지 말라는 동작 카드"
       },
       {
         id: "grade3-lesson3-card-3",
@@ -53,9 +53,9 @@ const thirdGradeLessons = [
     cards: [
       {
         id: "grade3-lesson3-mission2-card-1",
-        title: "Go away",
+        title: "Come here",
         src: "./3rd_grade/lesson3/mission2/cards/card-1.png",
-        alt: "여자아이와 강아지가 있는 Go away 동작 카드"
+        alt: "여자아이와 강아지가 있는 Come here 동작 카드"
       },
       {
         id: "grade3-lesson3-mission2-card-2",
@@ -83,9 +83,9 @@ const thirdGradeLessons = [
       },
       {
         id: "grade3-lesson3-mission2-card-6",
-        title: "Run",
+        title: "Don't run",
         src: "./3rd_grade/lesson3/mission2/cards/card-6.png",
-        alt: "달리는 동작 카드"
+        alt: "뛰지 말라는 동작 카드"
       },
       {
         id: "grade3-lesson3-mission2-card-7",
