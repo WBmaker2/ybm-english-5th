@@ -397,6 +397,57 @@ const sixthGradeLessons = [
         alt: "Lesson 5 picture card 7"
       }
     ]
+  },
+  {
+    id: "grade6-lesson6",
+    title: "6단원 I'm going to play soccer",
+    gradeLabel: "YBM 초등영어 6학년",
+    unitLabel: "6단원",
+    homeDescription: "첨부 PNG 속 그림 카드 6장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "Lesson 6 그림 카드 여섯 장을 보며 앞으로 할 일을 묻고 답하고, 버튼을 눌러 한 장씩 골든 벨 무대로 올려 보세요.",
+    boardTitle: "6장 그림 카드판",
+    boardNote: "6th_lesson6_1st.png에서 잘라낸 그림 카드 6장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade6-lesson6-card-1",
+        title: "Picture 1",
+        src: "./6th_grade/lesson6 I'm going to play soccer/cards/card-1.png",
+        alt: "Lesson 6 picture card 1"
+      },
+      {
+        id: "grade6-lesson6-card-2",
+        title: "Picture 2",
+        src: "./6th_grade/lesson6 I'm going to play soccer/cards/card-2.png",
+        alt: "Lesson 6 picture card 2"
+      },
+      {
+        id: "grade6-lesson6-card-3",
+        title: "Picture 3",
+        src: "./6th_grade/lesson6 I'm going to play soccer/cards/card-3.png",
+        alt: "Lesson 6 picture card 3"
+      },
+      {
+        id: "grade6-lesson6-card-4",
+        title: "Picture 4",
+        src: "./6th_grade/lesson6 I'm going to play soccer/cards/card-4.png",
+        alt: "Lesson 6 picture card 4"
+      },
+      {
+        id: "grade6-lesson6-card-5",
+        title: "Picture 5",
+        src: "./6th_grade/lesson6 I'm going to play soccer/cards/card-5.png",
+        alt: "Lesson 6 picture card 5"
+      },
+      {
+        id: "grade6-lesson6-card-6",
+        title: "Picture 6",
+        src: "./6th_grade/lesson6 I'm going to play soccer/cards/card-6.png",
+        alt: "Lesson 6 picture card 6"
+      }
+    ]
   }
 ];
 
@@ -438,11 +489,11 @@ export const grades = [
     id: "grade6",
     title: "6학년",
     gradeLabel: "YBM 초등영어 6학년",
-    unitLabel: "What's wrong? · Who painted this picture?",
-    homeDescription: "4단원 증상 카드와 5단원 그림 카드 게임으로 들어갑니다.",
+    unitLabel: "What's wrong? · Who painted this picture? · I'm going to play soccer",
+    homeDescription: "4단원 증상 카드, 5단원 그림 카드, 6단원 계획 표현 카드 게임으로 들어갑니다.",
     lessonSelectionTitle: "6학년 단원을 선택하세요.",
     lessonSelectionDescription:
-      "4단원 What's wrong? 카드와 5단원 Who painted this picture? 그림 카드를 사용할 수 있습니다.",
+      "4단원 What's wrong?, 5단원 Who painted this picture?, 6단원 I'm going to play soccer 카드를 사용할 수 있습니다.",
     lessons: sixthGradeLessons
   }
 ];
