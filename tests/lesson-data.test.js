@@ -85,10 +85,10 @@ test("4th grade exposes the What time is it lesson with seven PDF cards", () => 
   assert.match(lesson.cards[0].src, /4th_grade\/lesson3 What time is it\/cards\/card-1\.png/);
 });
 
-test("lessons keeps 5th grade lesson 2, lesson 3, and lesson 5 available", () => {
+test("lessons keeps 5th grade lesson 2, lesson 3, lesson 5, and lesson 6 available", () => {
   assert.deepEqual(
     getLessonsByGradeId("grade5").map((lesson) => lesson.id),
-    ["lesson2", "lesson3", "grade5-lesson5"]
+    ["lesson2", "lesson3", "grade5-lesson5", "grade5-lesson6"]
   );
   assert.deepEqual(
     lessons.map((lesson) => lesson.id),
@@ -99,6 +99,7 @@ test("lessons keeps 5th grade lesson 2, lesson 3, and lesson 5 available", () =>
       "lesson2",
       "lesson3",
       "grade5-lesson5",
+      "grade5-lesson6",
       "grade6-lesson4",
       "grade6-lesson5",
       "grade6-lesson6"
@@ -110,7 +111,7 @@ test("5th grade exposes lesson 5 with five object picture cards from the PPT", (
   const grade = getGradeById("grade5");
   const lesson = getLessonById("grade5-lesson5");
 
-  assert.equal(grade.lessons.length, 3);
+  assert.equal(grade.lessons.length, 4);
   assert.equal(lesson.title, "Lesson 5");
   assert.equal(lesson.cards.length, 5);
   assert.equal(lesson.usesStatusCardGridSlot, true);
@@ -120,6 +121,35 @@ test("5th grade exposes lesson 5 with five object picture cards from the PPT", (
     ["bottle", "cell phone", "umbrella", "glove", "watch"]
   );
   assert.match(lesson.cards[0].src, /5th_grade\/lesson5\/cards\/card-1\.png/);
+});
+
+test("5th grade exposes lesson 6 with four will-expression cards from the source PNG", () => {
+  const lesson = getLessonById("grade5-lesson6");
+
+  assert.equal(lesson?.title, "Lesson 6");
+  assert.equal(lesson?.cards.length, 4);
+  assert.equal(lesson?.usesStatusCardGridSlot, true);
+  assert.equal(lesson?.boardColumnCount, 3);
+  assert.deepEqual(
+    lesson?.cards.map((card) => card.title),
+    ["go to the beach", "visit my cousin", "go to a science camp", "read many books"]
+  );
+  const expectedSources = Array.from(
+    { length: 4 },
+    (_, index) => `./5th_grade/lesson6/cards/card-${index + 1}.png`
+  );
+
+  assert.deepEqual(
+    lesson?.cards.map((card) => card.src),
+    expectedSources
+  );
+  for (const source of expectedSources) {
+    assert.equal(
+      existsSync(new URL(`../${source.slice(2)}`, import.meta.url)),
+      true,
+      `${source} should exist`
+    );
+  }
 });
 
 test("6th grade exposes the What's wrong lesson with four picture cards", () => {

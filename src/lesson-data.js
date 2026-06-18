@@ -298,6 +298,45 @@ const fifthGradeLessons = [
         alt: "Lesson 5 watch picture card"
       }
     ]
+  },
+  {
+    id: "grade5-lesson6",
+    title: "Lesson 6",
+    gradeLabel: "YBM 초등영어 5학년",
+    unitLabel: "6단원",
+    homeDescription: "첨부 PNG 속 will 표현 카드 4장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "Lesson 6 will 표현 카드 네 장을 보며 방학 계획을 묻고 답하고, 버튼을 눌러 한 장씩 골든 벨 무대로 올려 보세요.",
+    boardTitle: "4장 will 표현 카드판",
+    boardNote: "5th_lesson6_will.png에서 잘라낸 go to the beach, visit my cousin, go to a science camp, read many books 카드 4장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade5-lesson6-card-1",
+        title: "go to the beach",
+        src: "./5th_grade/lesson6/cards/card-1.png",
+        alt: "go to the beach will expression card"
+      },
+      {
+        id: "grade5-lesson6-card-2",
+        title: "visit my cousin",
+        src: "./5th_grade/lesson6/cards/card-2.png",
+        alt: "visit my cousin will expression card"
+      },
+      {
+        id: "grade5-lesson6-card-3",
+        title: "go to a science camp",
+        src: "./5th_grade/lesson6/cards/card-3.png",
+        alt: "go to a science camp will expression card"
+      },
+      {
+        id: "grade5-lesson6-card-4",
+        title: "read many books",
+        src: "./5th_grade/lesson6/cards/card-4.png",
+        alt: "read many books will expression card"
+      }
+    ]
   }
 ];
 
@@ -478,11 +517,11 @@ export const grades = [
     id: "grade5",
     title: "5학년",
     gradeLabel: "YBM 초등영어 5학년",
-    unitLabel: "Lesson 2 · Lesson 3 · Lesson 5",
-    homeDescription: "단원을 선택해 골든 벨 자료를 활용합니다. Lesson 5 물건 카드가 새로 추가되었습니다.",
+    unitLabel: "Lesson 2 · Lesson 3 · Lesson 5 · Lesson 6",
+    homeDescription: "단원을 선택해 골든 벨 자료를 활용합니다. Lesson 5 물건 카드와 Lesson 6 will 표현 카드가 추가되었습니다.",
     lessonSelectionTitle: "5학년 단원을 선택하세요.",
     lessonSelectionDescription:
-      "Lesson 2, Lesson 3, Lesson 5 자료를 선택해서 사용할 수 있습니다.",
+      "Lesson 2, Lesson 3, Lesson 5, Lesson 6 자료를 선택해서 사용할 수 있습니다.",
     lessons: fifthGradeLessons
   },
   {
