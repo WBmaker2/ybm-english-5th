@@ -386,6 +386,11 @@ button {
   object-fit: contain;
 }
 
+.board-card.has-text-card-image {
+  aspect-ratio: 181 / 202;
+  min-height: 13rem;
+}
+
 .card-footer {
   position: absolute;
   right: 0;

@@ -14,6 +14,7 @@ export function buildLessonViewModel({ lesson, state }) {
   return {
     boardColumnCount: lesson.boardColumnCount || 3,
     boardItems,
+    showCardFooter: !lesson.imageCardsContainText,
     drawButtonLabel:
       state.remainingCount === 0 && state.selectedCardId ? "다음 라운드 추첨" : "랜덤 뽑기",
     lastCardTitle: state.selectedCardId

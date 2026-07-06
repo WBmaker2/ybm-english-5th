@@ -439,9 +439,9 @@ const sixthGradeLessons = [
   },
   {
     id: "grade6-lesson6",
-    title: "6단원 I'm going to play soccer",
+    title: "6단원 1차시 I'm going to play soccer",
     gradeLabel: "YBM 초등영어 6학년",
-    unitLabel: "6단원",
+    unitLabel: "6단원 1차시",
     homeDescription: "첨부 PNG 속 그림 카드 6장으로 진행하는 랜덤 뽑기 게임",
     gameDescription:
       "Lesson 6 그림 카드 여섯 장을 보며 앞으로 할 일을 묻고 답하고, 버튼을 눌러 한 장씩 골든 벨 무대로 올려 보세요.",
@@ -487,6 +487,76 @@ const sixthGradeLessons = [
         alt: "Lesson 6 picture card 6"
       }
     ]
+  },
+  {
+    id: "grade6-lesson6-period3",
+    title: "6단원 3차시 I'm going to play soccer",
+    gradeLabel: "YBM 초등영어 6학년",
+    unitLabel: "6단원 3차시",
+    homeDescription: "첨부 PNG 속 그림과 영어 문장이 함께 있는 카드 9장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "Lesson 6 3차시 그림+문장 카드 9장을 보며 계획 표현을 연습하고, 버튼을 눌러 한 장씩 골든 벨 무대로 올려 보세요.",
+    boardTitle: "9장 그림+문장 카드판",
+    boardNote: "6th_lesson6_3rd.png에서 잘라낸 그림과 영어 문장이 함께 있는 카드 9장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    imageCardsContainText: true,
+    cards: [
+      {
+        id: "grade6-lesson6-period3-card-1",
+        title: "face painting",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-1.png",
+        alt: "I'm going to do face painting picture and text card"
+      },
+      {
+        id: "grade6-lesson6-period3-card-2",
+        title: "go to the library",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-2.png",
+        alt: "I'm going to go to the library picture and text card"
+      },
+      {
+        id: "grade6-lesson6-period3-card-3",
+        title: "science project",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-3.png",
+        alt: "I'm going to do a science project picture and text card"
+      },
+      {
+        id: "grade6-lesson6-period3-card-4",
+        title: "sing a song",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-4.png",
+        alt: "I'm going to sing a song picture and text card"
+      },
+      {
+        id: "grade6-lesson6-period3-card-5",
+        title: "make an eco-bag",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-5.png",
+        alt: "I'm going to make an eco-bag picture and text card"
+      },
+      {
+        id: "grade6-lesson6-period3-card-6",
+        title: "watch a movie",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-6.png",
+        alt: "I'm going to watch a movie picture and text card"
+      },
+      {
+        id: "grade6-lesson6-period3-card-7",
+        title: "visit my grandmother",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-7.png",
+        alt: "I'm going to visit my grandmother picture and text card"
+      },
+      {
+        id: "grade6-lesson6-period3-card-8",
+        title: "see a soccer game",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-8.png",
+        alt: "I'm going to see a soccer game picture and text card"
+      },
+      {
+        id: "grade6-lesson6-period3-card-9",
+        title: "stay home",
+        src: "./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-9.png",
+        alt: "I'm going to stay home picture and text card"
+      }
+    ]
   }
 ];
 
@@ -528,11 +598,11 @@ export const grades = [
     id: "grade6",
     title: "6학년",
     gradeLabel: "YBM 초등영어 6학년",
-    unitLabel: "What's wrong? · Who painted this picture? · I'm going to play soccer",
-    homeDescription: "4단원 증상 카드, 5단원 그림 카드, 6단원 계획 표현 카드 게임으로 들어갑니다.",
+    unitLabel: "What's wrong? · Who painted this picture? · I'm going to play soccer 1차시/3차시",
+    homeDescription: "4단원 증상 카드, 5단원 그림 카드, 6단원 1차시/3차시 계획 표현 카드 게임으로 들어갑니다.",
     lessonSelectionTitle: "6학년 단원을 선택하세요.",
     lessonSelectionDescription:
-      "4단원 What's wrong?, 5단원 Who painted this picture?, 6단원 I'm going to play soccer 카드를 사용할 수 있습니다.",
+      "4단원 What's wrong?, 5단원 Who painted this picture?, 6단원 I'm going to play soccer 1차시와 3차시 카드를 사용할 수 있습니다.",
     lessons: sixthGradeLessons
   }
 ];

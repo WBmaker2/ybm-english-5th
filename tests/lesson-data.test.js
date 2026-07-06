@@ -102,7 +102,8 @@ test("lessons keeps 5th grade lesson 2, lesson 3, lesson 5, and lesson 6 availab
       "grade5-lesson6",
       "grade6-lesson4",
       "grade6-lesson5",
-      "grade6-lesson6"
+      "grade6-lesson6",
+      "grade6-lesson6-period3"
     ]
   );
 });
@@ -156,10 +157,10 @@ test("6th grade exposes the What's wrong lesson with four picture cards", () => 
   const grade = getGradeById("grade6");
   const lesson = getLessonById("grade6-lesson4");
 
-  assert.equal(grade.lessons.length, 3);
+  assert.equal(grade.lessons.length, 4);
   assert.deepEqual(
     getLessonsByGradeId("grade6").map((item) => item.id),
-    ["grade6-lesson4", "grade6-lesson5", "grade6-lesson6"]
+    ["grade6-lesson4", "grade6-lesson5", "grade6-lesson6", "grade6-lesson6-period3"]
   );
   assert.equal(lesson.title, "4단원 What's wrong?");
   assert.equal(lesson.cards.length, 4);
@@ -208,7 +209,7 @@ test("6th grade exposes lesson 5 with seven picture cards from the revised PPT",
 test("6th grade exposes lesson 6 with six picture cards from the source PNG", () => {
   const lesson = getLessonById("grade6-lesson6");
 
-  assert.equal(lesson?.title, "6단원 I'm going to play soccer");
+  assert.equal(lesson?.title, "6단원 1차시 I'm going to play soccer");
   assert.equal(lesson?.cards.length, 6);
   assert.equal(lesson?.usesStatusCardGridSlot, true);
   assert.equal(lesson?.boardColumnCount, 3);
@@ -220,6 +221,47 @@ test("6th grade exposes lesson 6 with six picture cards from the source PNG", ()
     { length: 6 },
     (_, index) =>
       `./6th_grade/lesson6 I'm going to play soccer/cards/card-${index + 1}.png`
+  );
+
+  assert.deepEqual(
+    lesson?.cards.map((card) => card.src),
+    expectedSources
+  );
+  for (const source of expectedSources) {
+    assert.equal(
+      existsSync(new URL(`../${source.slice(2)}`, import.meta.url)),
+      true,
+      `${source} should exist`
+    );
+  }
+});
+
+test("6th grade exposes lesson 6 period 3 with nine picture and text cards from the source PNG", () => {
+  const lesson = getLessonById("grade6-lesson6-period3");
+
+  assert.equal(lesson?.title, "6단원 3차시 I'm going to play soccer");
+  assert.equal(lesson?.cards.length, 9);
+  assert.equal(lesson?.usesStatusCardGridSlot, true);
+  assert.equal(lesson?.boardColumnCount, 3);
+  assert.equal(lesson?.imageCardsContainText, true);
+  assert.deepEqual(
+    lesson?.cards.map((card) => card.title),
+    [
+      "face painting",
+      "go to the library",
+      "science project",
+      "sing a song",
+      "make an eco-bag",
+      "watch a movie",
+      "visit my grandmother",
+      "see a soccer game",
+      "stay home"
+    ]
+  );
+  const expectedSources = Array.from(
+    { length: 9 },
+    (_, index) =>
+      `./6th_grade/lesson6 I'm going to play soccer/period3/cards/card-${index + 1}.png`
   );
 
   assert.deepEqual(

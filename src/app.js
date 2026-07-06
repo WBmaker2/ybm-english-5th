@@ -187,6 +187,7 @@ function renderStatusCardMarkup(lesson, state) {
 function renderBoard(lesson, state) {
   const viewModel = buildLessonViewModel({ lesson, state });
   const statusCardMarkup = renderStatusCardMarkup(lesson, state);
+  const textImageCardClass = viewModel.showCardFooter ? "" : "has-text-card-image";
   cardGrid.dataset.columns = String(viewModel.boardColumnCount);
 
   cardGrid.innerHTML = viewModel.boardItems
@@ -196,16 +197,20 @@ function renderBoard(lesson, state) {
       }
 
       return `
-        <article class="board-card ${item.drawOrder ? "is-drawn" : ""} ${item.isSelected ? "is-selected" : ""}" aria-label="${item.card.title}">
+        <article class="board-card ${textImageCardClass} ${item.drawOrder ? "is-drawn" : ""} ${item.isSelected ? "is-selected" : ""}" aria-label="${item.card.title}">
           <div class="card-image-shell">
             <img src="${item.card.src}" alt="${item.card.alt}" />
           </div>
           ${item.drawOrder ? `<span class="drawn-chip">뽑힘</span>` : ""}
           ${item.drawOrder ? `<span class="order-badge">${item.drawOrder}</span>` : ""}
-          <div class="card-footer">
-            <p>${item.drawOrder ? `${item.drawOrder}번째 순서` : "대기 중"}</p>
-            <h3>${item.card.title}</h3>
-          </div>
+          ${
+            viewModel.showCardFooter
+              ? `<div class="card-footer">
+                  <p>${item.drawOrder ? `${item.drawOrder}번째 순서` : "대기 중"}</p>
+                  <h3>${item.card.title}</h3>
+                </div>`
+              : ""
+          }
         </article>
       `;
     })
