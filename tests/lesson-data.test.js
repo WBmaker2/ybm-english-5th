@@ -70,19 +70,57 @@ test("3rd grade exposes lesson 3 missions with PDF cards", () => {
   }
 });
 
-test("4th grade exposes the What time is it lesson with seven PDF cards", () => {
+test("4th grade exposes lesson 3 and lesson 5 mission 2 card sets", () => {
   const grade = getGradeById("grade4");
-  const lesson = getLessonById("grade4-lesson3");
+  const lesson3 = getLessonById("grade4-lesson3");
+  const lesson5Mission2 = getLessonById("grade4-lesson5-mission2");
 
-  assert.equal(grade.lessons.length, 1);
+  assert.equal(grade.lessons.length, 2);
   assert.deepEqual(
     getLessonsByGradeId("grade4").map((item) => item.id),
-    ["grade4-lesson3"]
+    ["grade4-lesson3", "grade4-lesson5-mission2"]
   );
-  assert.equal(lesson.title, "3단원 What time is it?");
-  assert.equal(lesson.cards.length, 7);
-  assert.equal(lesson.usesStatusCardGridSlot, true);
-  assert.match(lesson.cards[0].src, /4th_grade\/lesson3 What time is it\/cards\/card-1\.png/);
+  assert.equal(lesson3.title, "3단원 What time is it?");
+  assert.equal(lesson3.cards.length, 7);
+  assert.equal(lesson3.usesStatusCardGridSlot, true);
+  assert.match(lesson3.cards[0].src, /4th_grade\/lesson3 What time is it\/cards\/card-1\.png/);
+
+  assert.equal(lesson5Mission2.title, "5단원 2차시 Where is my bag?");
+  assert.equal(lesson5Mission2.cards.length, 10);
+  assert.equal(lesson5Mission2.usesStatusCardGridSlot, true);
+  assert.equal(lesson5Mission2.boardColumnCount, 3);
+  assert.deepEqual(
+    lesson5Mission2.cards.map((card) => card.title),
+    [
+      "pencil",
+      "book",
+      "ruler",
+      "cell phone",
+      "soccer ball",
+      "hat",
+      "cap",
+      "lunch box",
+      "notebook",
+      "watch"
+    ]
+  );
+  const expectedSources = Array.from(
+    { length: 10 },
+    (_, index) =>
+      `./4th_grade/lesson5 Where is my bag/cards/card-${index + 1}.png`
+  );
+
+  assert.deepEqual(
+    lesson5Mission2.cards.map((card) => card.src),
+    expectedSources
+  );
+  for (const source of expectedSources) {
+    assert.equal(
+      existsSync(new URL(`../${source.slice(2)}`, import.meta.url)),
+      true,
+      `${source} should exist`
+    );
+  }
 });
 
 test("lessons keeps 5th grade lesson 2, lesson 3, lesson 5, and lesson 6 available", () => {
@@ -96,6 +134,7 @@ test("lessons keeps 5th grade lesson 2, lesson 3, lesson 5, and lesson 6 availab
       "grade3-lesson3",
       "grade3-lesson3-mission2",
       "grade4-lesson3",
+      "grade4-lesson5-mission2",
       "lesson2",
       "lesson3",
       "grade5-lesson5",

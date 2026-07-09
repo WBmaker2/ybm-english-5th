@@ -154,6 +154,82 @@ const fourthGradeLessons = [
         alt: "12:00 점심 도시락 시간 카드"
       }
     ]
+  },
+  {
+    id: "grade4-lesson5-mission2",
+    title: "5단원 2차시 Where is my bag?",
+    gradeLabel: "YBM 초등영어 4학년",
+    unitLabel: "5단원 2차시",
+    homeDescription: "첨부 이미지를 잘라 만든 물건 카드 10장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "뽑힌 물건 카드를 보고 교사가 Where is my ____? 질문을 던질 수 있도록 구성한 카드판입니다.",
+    boardTitle: "10장 물건 카드판",
+    boardNote:
+      "4학년 5단원 2차시 이미지에서 pencil, book, ruler, cell phone, soccer ball, hat, cap, lunch box, notebook, watch 카드 10장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade4-lesson5-mission2-card-1",
+        title: "pencil",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-1.png",
+        alt: "Lesson 5 mission 2 pencil picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-2",
+        title: "book",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-2.png",
+        alt: "Lesson 5 mission 2 book picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-3",
+        title: "ruler",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-3.png",
+        alt: "Lesson 5 mission 2 ruler picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-4",
+        title: "cell phone",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-4.png",
+        alt: "Lesson 5 mission 2 cell phone picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-5",
+        title: "soccer ball",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-5.png",
+        alt: "Lesson 5 mission 2 soccer ball picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-6",
+        title: "hat",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-6.png",
+        alt: "Lesson 5 mission 2 hat picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-7",
+        title: "cap",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-7.png",
+        alt: "Lesson 5 mission 2 cap picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-8",
+        title: "lunch box",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-8.png",
+        alt: "Lesson 5 mission 2 lunch box picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-9",
+        title: "notebook",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-9.png",
+        alt: "Lesson 5 mission 2 notebook picture card"
+      },
+      {
+        id: "grade4-lesson5-mission2-card-10",
+        title: "watch",
+        src: "./4th_grade/lesson5 Where is my bag/cards/card-10.png",
+        alt: "Lesson 5 mission 2 watch picture card"
+      }
+    ]
   }
 ];
 
@@ -576,11 +652,11 @@ export const grades = [
     id: "grade4",
     title: "4학년",
     gradeLabel: "YBM 초등영어 4학년",
-    unitLabel: "What time is it?",
-    homeDescription: "새로 추가한 3단원 시간 카드 게임으로 들어갑니다.",
+    unitLabel: "What time is it? · Where is my bag?",
+    homeDescription: "3단원 시간 카드와 5단원 2차시 물건 카드 게임으로 들어갑니다.",
     lessonSelectionTitle: "4학년 단원을 선택하세요.",
     lessonSelectionDescription:
-      "현재는 3단원 What time is it? 활동자료 카드 7장을 사용할 수 있습니다.",
+      "3단원 What time is it? 활동자료 카드 7장과 5단원 2차시 Where is my bag? 물건 카드 10장을 사용할 수 있습니다.",
     lessons: fourthGradeLessons
   },
   {

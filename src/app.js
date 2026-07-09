@@ -95,7 +95,9 @@ function renderGradeSelection() {
       return `
         <article class="lesson-option grade-option" data-grade-id="${grade.id}">
           <div class="lesson-option-media">
-            <span class="lesson-count-badge">${grade.lessons.length} lesson</span>
+            <span class="lesson-count-badge">${grade.lessons.length} ${
+              grade.lessons.length === 1 ? "lesson" : "lessons"
+            }</span>
             <button
               class="grade-media-button"
               type="button"
