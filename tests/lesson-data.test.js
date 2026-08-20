@@ -195,8 +195,12 @@ test("5th grade exposes lesson 6 with four will-expression cards from the source
 
 test("5th grade exposes lesson 7 period 1 with six PDF picture cards", () => {
   const lesson = getLessonById("grade5-lesson7-period1");
+  const grade = getGradeById("grade5");
 
-  assert.equal(lesson?.title, "7단원 1차시 Mission 1");
+  assert.equal(lesson?.title, "7단원 I went to Dokdo");
+  assert.equal(lesson?.unitLabel, "7단원");
+  assert.match(grade?.unitLabel, /I went to Dokdo/);
+  assert.match(grade?.lessonSelectionDescription, /I went to Dokdo/);
   assert.equal(lesson?.cards.length, 6);
   assert.equal(lesson?.usesStatusCardGridSlot, true);
   assert.equal(lesson?.boardColumnCount, 3);
