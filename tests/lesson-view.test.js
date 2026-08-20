@@ -76,6 +76,18 @@ test("buildLessonViewModel keeps 5th grade lesson 6 at four image cards plus gri
   assert.equal(viewModel.boardColumnCount, 3);
 });
 
+test("buildLessonViewModel keeps 5th grade lesson 7 period 1 at six image cards plus grid status", () => {
+  const lesson = getLessonById("grade5-lesson7-period1");
+  const state = createGameState(lesson.cards.map((card) => card.id), () => 0);
+
+  const viewModel = buildLessonViewModel({ lesson, state });
+
+  assert.equal(viewModel.boardItems.length, 7);
+  assert.equal(viewModel.boardItems.filter((item) => item.type === "card").length, 6);
+  assert.equal(viewModel.boardItems.at(-1).type, "status");
+  assert.equal(viewModel.boardColumnCount, 3);
+});
+
 test("buildLessonViewModel keeps 4th grade lesson 3 at seven image cards plus grid status", () => {
   const lesson = getLessonById("grade4-lesson3");
   const state = createGameState(lesson.cards.map((card) => card.id), () => 0);

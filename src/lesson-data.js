@@ -413,6 +413,57 @@ const fifthGradeLessons = [
         alt: "read many books will expression card"
       }
     ]
+  },
+  {
+    id: "grade5-lesson7-period1",
+    title: "7단원 1차시 Mission 1",
+    gradeLabel: "YBM 초등영어 5학년",
+    unitLabel: "7단원 1차시",
+    homeDescription: "PDF 활동자료에서 추출한 그림 카드 6장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "Lesson 7 Mission 1 그림 카드 여섯 장을 보며 활동을 시작하고, 버튼을 눌러 한 장씩 골든 벨 무대로 올려 보세요.",
+    boardTitle: "6장 그림 카드판",
+    boardNote: "5학년 7단원 1차시 PDF의 2 x 3 그림 카드 6장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade5-lesson7-period1-card-1",
+        title: "그림 1",
+        src: "./5th_grade/lesson7/cards/card-1.png",
+        alt: "Lesson 7 Mission 1 그림 카드 1"
+      },
+      {
+        id: "grade5-lesson7-period1-card-2",
+        title: "그림 2",
+        src: "./5th_grade/lesson7/cards/card-2.png",
+        alt: "Lesson 7 Mission 1 그림 카드 2"
+      },
+      {
+        id: "grade5-lesson7-period1-card-3",
+        title: "그림 3",
+        src: "./5th_grade/lesson7/cards/card-3.png",
+        alt: "Lesson 7 Mission 1 그림 카드 3"
+      },
+      {
+        id: "grade5-lesson7-period1-card-4",
+        title: "그림 4",
+        src: "./5th_grade/lesson7/cards/card-4.png",
+        alt: "Lesson 7 Mission 1 그림 카드 4"
+      },
+      {
+        id: "grade5-lesson7-period1-card-5",
+        title: "그림 5",
+        src: "./5th_grade/lesson7/cards/card-5.png",
+        alt: "Lesson 7 Mission 1 그림 카드 5"
+      },
+      {
+        id: "grade5-lesson7-period1-card-6",
+        title: "그림 6",
+        src: "./5th_grade/lesson7/cards/card-6.png",
+        alt: "Lesson 7 Mission 1 그림 카드 6"
+      }
+    ]
   }
 ];
 
@@ -663,11 +714,11 @@ export const grades = [
     id: "grade5",
     title: "5학년",
     gradeLabel: "YBM 초등영어 5학년",
-    unitLabel: "Lesson 2 · Lesson 3 · Lesson 5 · Lesson 6",
-    homeDescription: "단원을 선택해 골든 벨 자료를 활용합니다. Lesson 5 물건 카드와 Lesson 6 will 표현 카드가 추가되었습니다.",
+    unitLabel: "Lesson 2 · Lesson 3 · Lesson 5 · Lesson 6 · Lesson 7",
+    homeDescription: "단원을 선택해 골든 벨 자료를 활용합니다. Lesson 7 그림 카드가 추가되었습니다.",
     lessonSelectionTitle: "5학년 단원을 선택하세요.",
     lessonSelectionDescription:
-      "Lesson 2, Lesson 3, Lesson 5, Lesson 6 자료를 선택해서 사용할 수 있습니다.",
+      "Lesson 2, Lesson 3, Lesson 5, Lesson 6, Lesson 7 자료를 선택해서 사용할 수 있습니다.",
     lessons: fifthGradeLessons
   },
   {
