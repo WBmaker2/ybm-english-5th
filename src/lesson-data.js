@@ -684,6 +684,93 @@ const sixthGradeLessons = [
         alt: "I'm going to stay home picture and text card"
       }
     ]
+  },
+  {
+    id: "grade6-lesson7-period1",
+    title: "7단원 1차시 I'd like to have watermelon juice",
+    gradeLabel: "YBM 초등영어 6학년",
+    unitLabel: "7단원 1차시",
+    homeDescription: "첨부 이미지 속 음식과 음료 그림 카드 12장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "Lesson 7 1차시 음식과 음료 그림 카드 12장을 보며 원하는 음식을 말하고, 버튼을 눌러 한 장씩 골든 벨 무대로 올려 보세요.",
+    boardTitle: "12장 음식·음료 카드판",
+    boardNote: "첨부 이미지에서 왼쪽 위부터 오른쪽 아래 순서로 잘라낸 음식과 음료 그림 카드 12장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade6-lesson7-period1-card-1",
+        title: "pizza",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-1.png",
+        alt: "Lesson 7 period 1 pizza picture card 1"
+      },
+      {
+        id: "grade6-lesson7-period1-card-2",
+        title: "carrot juice",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-2.png",
+        alt: "Lesson 7 period 1 carrot juice picture card 2"
+      },
+      {
+        id: "grade6-lesson7-period1-card-3",
+        title: "fruit salad",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-3.png",
+        alt: "Lesson 7 period 1 fruit salad picture card 3"
+      },
+      {
+        id: "grade6-lesson7-period1-card-4",
+        title: "tteokbokki",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-4.png",
+        alt: "Lesson 7 period 1 tteokbokki picture card 4"
+      },
+      {
+        id: "grade6-lesson7-period1-card-5",
+        title: "watermelon juice",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-5.png",
+        alt: "Lesson 7 period 1 watermelon juice picture card 5"
+      },
+      {
+        id: "grade6-lesson7-period1-card-6",
+        title: "spaghetti",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-6.png",
+        alt: "Lesson 7 period 1 spaghetti picture card 6"
+      },
+      {
+        id: "grade6-lesson7-period1-card-7",
+        title: "pizza",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-7.png",
+        alt: "Lesson 7 period 1 pizza picture card 7"
+      },
+      {
+        id: "grade6-lesson7-period1-card-8",
+        title: "carrot juice",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-8.png",
+        alt: "Lesson 7 period 1 carrot juice picture card 8"
+      },
+      {
+        id: "grade6-lesson7-period1-card-9",
+        title: "spaghetti",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-9.png",
+        alt: "Lesson 7 period 1 spaghetti picture card 9"
+      },
+      {
+        id: "grade6-lesson7-period1-card-10",
+        title: "fruit salad",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-10.png",
+        alt: "Lesson 7 period 1 fruit salad picture card 10"
+      },
+      {
+        id: "grade6-lesson7-period1-card-11",
+        title: "tteokbokki",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-11.png",
+        alt: "Lesson 7 period 1 tteokbokki picture card 11"
+      },
+      {
+        id: "grade6-lesson7-period1-card-12",
+        title: "watermelon juice",
+        src: "./6th_grade/lesson7 I'd like to have watermelon juice/cards/card-12.png",
+        alt: "Lesson 7 period 1 watermelon juice picture card 12"
+      }
+    ]
   }
 ];
 
@@ -725,11 +812,11 @@ export const grades = [
     id: "grade6",
     title: "6학년",
     gradeLabel: "YBM 초등영어 6학년",
-    unitLabel: "What's wrong? · Who painted this picture? · I'm going to play soccer 1차시/3차시",
-    homeDescription: "4단원 증상 카드, 5단원 그림 카드, 6단원 1차시/3차시 계획 표현 카드 게임으로 들어갑니다.",
+    unitLabel: "What's wrong? · Who painted this picture? · I'm going to play soccer · I'd like to have watermelon juice",
+    homeDescription: "4단원 증상 카드, 5단원 그림 카드, 6단원 계획 표현 카드, 7단원 음식·음료 카드 게임으로 들어갑니다.",
     lessonSelectionTitle: "6학년 단원을 선택하세요.",
     lessonSelectionDescription:
-      "4단원 What's wrong?, 5단원 Who painted this picture?, 6단원 I'm going to play soccer 1차시와 3차시 카드를 사용할 수 있습니다.",
+      "4단원 What's wrong?, 5단원 Who painted this picture?, 6단원 I'm going to play soccer, 7단원 I'd like to have watermelon juice 카드를 사용할 수 있습니다.",
     lessons: sixthGradeLessons
   }
 ];
