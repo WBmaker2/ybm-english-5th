@@ -4,11 +4,17 @@ import { existsSync, readFileSync } from "node:fs";
 
 import {
   getGradeById,
+  getGradeByLessonId,
   getLessonById,
   getLessonsByGradeId,
   grades,
   lessons
 } from "../src/lesson-data.js";
+
+test("getGradeByLessonId supports returning to the current grade lesson list", () => {
+  assert.equal(getGradeByLessonId("grade6-lesson7-period1")?.id, "grade6");
+  assert.equal(getGradeByLessonId("missing-lesson"), null);
+});
 
 test("grades exposes 3rd grade, 4th grade, 5th grade, and 6th grade in landing order", () => {
   assert.deepEqual(

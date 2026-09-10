@@ -1,6 +1,11 @@
 import { createGameState, drawNextCard, resetCurrentRound } from "./game-state.js";
 import { createHeroMediaView } from "./hero-view.js";
-import { grades, getGradeById, getLessonById } from "./lesson-data.js";
+import {
+  grades,
+  getGradeById,
+  getGradeByLessonId,
+  getLessonById
+} from "./lesson-data.js";
 import { buildLessonViewModel } from "./lesson-view.js";
 import { getHashForScreen, getScreenFromHash } from "./screen-state.js";
 import { createDrawSoundPlayer } from "./sound.js";
@@ -9,6 +14,8 @@ const homeScreen = document.querySelector("#home-screen");
 const gameScreen = document.querySelector("#game-screen");
 const lessonSelectionGrid = document.querySelector("#lesson-selection-grid");
 const homeButton = document.querySelector("#home-button");
+const lessonListButton = document.querySelector("#lesson-list-button");
+const soundToggle = document.querySelector("#sound-toggle");
 const headerContext = document.querySelector("#header-context");
 const homeKicker = document.querySelector("#home-kicker");
 const homeTitle = document.querySelector("#home-title");
@@ -26,6 +33,7 @@ const drawButton = document.querySelector("#draw-button");
 const resetButton = document.querySelector("#reset-button");
 const stageNote = document.querySelector("#stage-note");
 const focusStatusSlot = document.querySelector("#focus-status-slot");
+const focusStatusSummary = document.querySelector("#focus-status-summary");
 const heroCard = document.querySelector("#hero-card");
 const heroImage = document.querySelector("#hero-image");
 const heroPlaceholder = document.querySelector("#hero-placeholder");
@@ -37,6 +45,7 @@ const liveStatus = document.querySelector("#live-status");
 
 const lessonStateById = new Map();
 const playDrawSound = createDrawSoundPlayer();
+let soundEnabled = true;
 
 function getCardById(lesson, cardId) {
   return lesson.cards.find((card) => card.id === cardId) || null;
@@ -75,7 +84,7 @@ function navigateToScreen(screen) {
   const nextHash = getHashForScreen(screen);
 
   if (window.location.hash === nextHash) {
-    renderScreen();
+    renderScreen(true);
     return;
   }
 
@@ -107,7 +116,7 @@ function renderGradeSelection() {
             </button>
             ${
               previewCard
-                ? `<img src="${previewCard.src}" alt="${grade.title} 대표 카드" />`
+                ? `<img src="${previewCard.src}" alt="${grade.title} 대표 카드" loading="lazy" decoding="async" />`
                 : ""
             }
           </div>
@@ -130,7 +139,7 @@ function renderLessonSelection(grade) {
         <article class="lesson-option">
           <div class="lesson-option-media">
             <span class="lesson-count-badge">${lesson.cards.length} cards</span>
-            <img src="${lesson.cards[0].src}" alt="${lesson.title} 대표 그림" />
+            <img src="${lesson.cards[0].src}" alt="${lesson.title} 대표 그림" loading="lazy" decoding="async" />
           </div>
           <div class="lesson-option-body">
             <p class="section-label">${lesson.unitLabel}</p>
@@ -178,11 +187,35 @@ function renderStatusCardMarkup(lesson, state) {
         <p class="section-label">Last Pick</p>
         <p>${lastCardTitle}</p>
       </div>
-      <div>
-        <p class="section-label">Draw Order</p>
-        ${orderMarkup}
-      </div>
+      <details class="status-details">
+        <summary>추첨 순서 보기 (${state.drawnOrder.length}/${lesson.cards.length})</summary>
+        <div>
+          <p class="section-label">Draw Order</p>
+          ${orderMarkup}
+        </div>
+      </details>
     </article>
+  `;
+}
+
+function renderFocusStatusSummary(lesson, state) {
+  const lastCardTitle = state.selectedCardId
+    ? getCardTitle(lesson, state.selectedCardId)
+    : "아직 없음";
+
+  focusStatusSummary.innerHTML = `
+    <div class="summary-item">
+      <span class="summary-label">현재 라운드</span>
+      <strong>Round ${state.round}</strong>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">남은 카드</span>
+      <strong>${state.remainingCount}장</strong>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">마지막 카드</span>
+      <strong>${lastCardTitle}</strong>
+    </div>
   `;
 }
 
@@ -201,7 +234,7 @@ function renderBoard(lesson, state) {
       return `
         <article class="board-card ${textImageCardClass} ${item.drawOrder ? "is-drawn" : ""} ${item.isSelected ? "is-selected" : ""}" aria-label="${item.card.title}">
           <div class="card-image-shell">
-            <img src="${item.card.src}" alt="${item.card.alt}" />
+            <img src="${item.card.src}" alt="${item.card.alt}" loading="lazy" decoding="async" />
           </div>
           ${item.drawOrder ? `<span class="drawn-chip">뽑힘</span>` : ""}
           ${item.drawOrder ? `<span class="order-badge">${item.drawOrder}</span>` : ""}
@@ -220,6 +253,7 @@ function renderBoard(lesson, state) {
 
   focusStatusSlot.hidden = lesson.usesStatusCardGridSlot;
   focusStatusSlot.innerHTML = lesson.usesStatusCardGridSlot ? "" : statusCardMarkup;
+  renderFocusStatusSummary(lesson, state);
   drawButton.textContent = viewModel.drawButtonLabel;
 }
 
@@ -268,7 +302,25 @@ function renderHero(lesson, state, action = "idle", roundAdvanced = false) {
   }
 }
 
-function renderHomeScreen() {
+function updateTopbar({ showHome = false, showLessonList = false, showSound = false }) {
+  homeButton.hidden = !showHome;
+  lessonListButton.hidden = !showLessonList;
+  soundToggle.hidden = !showSound;
+  soundToggle.setAttribute("aria-pressed", String(soundEnabled));
+  soundToggle.textContent = soundEnabled ? "소리 끄기" : "소리 켜기";
+}
+
+function focusActiveHeading(heading, shouldFocus) {
+  if (!shouldFocus) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    heading.focus();
+  });
+}
+
+function renderHomeScreen(shouldFocus = false) {
   document.title = "YBM 영어 골든 벨";
   headerContext.textContent = "학년을 선택한 뒤 단원별 골든 벨 카드 게임을 시작할 수 있습니다.";
   homeKicker.textContent = "Grade Select";
@@ -279,13 +331,14 @@ function renderHomeScreen() {
   homeHighlightTitle.textContent = "학년별 자료를 같은 규칙으로";
   homeHighlightBody.textContent =
     "랜덤 뽑기, 중앙 무대, 효과음, 초기화 흐름은 그대로 유지하고 카드 자료만 단원에 맞게 바뀝니다.";
-  homeButton.hidden = true;
+  updateTopbar({ showHome: false, showLessonList: false, showSound: false });
   homeScreen.hidden = false;
   gameScreen.hidden = true;
   renderGradeSelection();
+  focusActiveHeading(homeTitle, shouldFocus);
 }
 
-function renderGradeScreen(grade) {
+function renderGradeScreen(grade, shouldFocus = false) {
   document.title = `${grade.title} | YBM 영어 골든 벨`;
   headerContext.textContent = `${grade.title} 자료를 선택하는 중입니다. 처음 화면으로 돌아가 다른 학년을 선택할 수 있습니다.`;
   homeKicker.textContent = "Lesson Select";
@@ -295,18 +348,19 @@ function renderGradeScreen(grade) {
   homeHighlightTitle.textContent = `${grade.title} 골든 벨 자료`;
   homeHighlightBody.textContent =
     "원하는 단원을 누르면 기존 랜덤 뽑기 화면으로 바로 이동합니다.";
-  homeButton.hidden = false;
+  updateTopbar({ showHome: true, showLessonList: false, showSound: false });
   homeScreen.hidden = false;
   gameScreen.hidden = true;
   renderLessonSelection(grade);
+  focusActiveHeading(homeTitle, shouldFocus);
 }
 
-function renderGameScreen(lesson, action = "idle", roundAdvanced = false) {
+function renderGameScreen(lesson, action = "idle", roundAdvanced = false, shouldFocus = false) {
   const state = ensureLessonState(lesson);
 
   document.title = `${lesson.title} | YBM 영어 골든 벨`;
   headerContext.textContent = `${lesson.title} 자료를 사용하는 중입니다. 홈으로 돌아가 다른 단원을 선택할 수 있습니다.`;
-  homeButton.hidden = false;
+  updateTopbar({ showHome: true, showLessonList: true, showSound: true });
   homeScreen.hidden = true;
   gameScreen.hidden = false;
 
@@ -318,16 +372,17 @@ function renderGameScreen(lesson, action = "idle", roundAdvanced = false) {
 
   renderBoard(lesson, state);
   renderHero(lesson, state, action, roundAdvanced);
+  focusActiveHeading(lessonTitle, shouldFocus);
 }
 
-function renderScreen() {
+function renderScreen(shouldFocus = false) {
   const screen = getScreenFromHash(window.location.hash);
 
   if (screen.name === "lesson") {
     const lesson = getLessonById(screen.lessonId);
 
     if (lesson) {
-      renderGameScreen(lesson);
+      renderGameScreen(lesson, "idle", false, shouldFocus);
       return;
     }
   }
@@ -336,12 +391,12 @@ function renderScreen() {
     const grade = getGradeById(screen.gradeId);
 
     if (grade) {
-      renderGradeScreen(grade);
+      renderGradeScreen(grade, shouldFocus);
       return;
     }
   }
 
-  renderHomeScreen();
+  renderHomeScreen(shouldFocus);
 }
 
 lessonSelectionGrid.addEventListener("click", (event) => {
@@ -371,6 +426,25 @@ homeButton.addEventListener("click", () => {
   navigateToScreen({ name: "home" });
 });
 
+lessonListButton.addEventListener("click", () => {
+  const lesson = getCurrentLesson();
+
+  if (!lesson) {
+    return;
+  }
+
+  const grade = getGradeByLessonId(lesson.id);
+  navigateToScreen({ name: "grade", gradeId: grade?.id || lesson.gradeId });
+});
+
+soundToggle.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+  updateTopbar({ showHome: true, showLessonList: true, showSound: true });
+  liveStatus.textContent = soundEnabled
+    ? "추첨 효과음을 켰습니다."
+    : "추첨 효과음을 껐습니다.";
+});
+
 drawButton.addEventListener("click", () => {
   const lesson = getCurrentLesson();
 
@@ -384,7 +458,9 @@ drawButton.addEventListener("click", () => {
 
   setLessonState(lesson.id, nextState);
   renderGameScreen(lesson, "draw", roundAdvanced);
-  playDrawSound();
+  if (soundEnabled) {
+    playDrawSound();
+  }
 });
 
 resetButton.addEventListener("click", () => {
@@ -394,7 +470,19 @@ resetButton.addEventListener("click", () => {
     return;
   }
 
-  const nextState = resetCurrentRound(ensureLessonState(lesson));
+  const currentState = ensureLessonState(lesson);
+
+  if (currentState.drawnOrder.length > 0) {
+    const confirmed = window.confirm(
+      "현재 추첨 기록을 지우고 게임을 처음부터 다시 시작할까요?"
+    );
+
+    if (!confirmed) {
+      return;
+    }
+  }
+
+  const nextState = resetCurrentRound(currentState);
   setLessonState(lesson.id, nextState);
   renderGameScreen(lesson, "reset");
   stageNote.textContent = `${lesson.title}이 초기화되었습니다. 다시 랜덤 뽑기를 눌러 시작하세요.`;
@@ -402,7 +490,7 @@ resetButton.addEventListener("click", () => {
 });
 
 window.addEventListener("hashchange", () => {
-  renderScreen();
+  renderScreen(true);
 });
 
 renderScreen();

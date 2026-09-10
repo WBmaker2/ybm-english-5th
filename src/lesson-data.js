@@ -897,3 +897,7 @@ export function getLessonsByGradeId(gradeId) {
 export function getLessonById(lessonId) {
   return lessons.find((lesson) => lesson.id === lessonId) || null;
 }
+
+export function getGradeByLessonId(lessonId) {
+  return grades.find((grade) => grade.lessons.some((lesson) => lesson.id === lessonId)) || null;
+}

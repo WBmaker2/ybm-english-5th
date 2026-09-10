@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
     <div class="page-glow page-glow-left" aria-hidden="true"></div>
     <div class="page-glow page-glow-right" aria-hidden="true"></div>
 
-    <div class="app-shell">
+    <div class="app-shell" id="main-content" tabindex="-1">
       <header class="app-topbar">
         <div class="topbar-brand">
           <p class="hero-kicker">YBM 초등영어</p>
@@ -28,6 +29,23 @@
           >
             홈으로 돌아가기
           </button>
+          <button
+            class="action-button secondary compact"
+            id="lesson-list-button"
+            type="button"
+            hidden
+          >
+            단원 목록
+          </button>
+          <button
+            class="action-button secondary compact sound-toggle"
+            id="sound-toggle"
+            type="button"
+            aria-pressed="true"
+            hidden
+          >
+            소리 끄기
+          </button>
         </div>
       </header>
 
@@ -35,7 +53,7 @@
         <header class="home-hero">
           <div class="home-copy">
             <p class="hero-kicker" id="home-kicker">Grade Select</p>
-            <h2 id="home-title">학년을 선택하고 골든 벨 수업을 시작하세요.</h2>
+            <h2 id="home-title" tabindex="-1">학년을 선택하고 골든 벨 수업을 시작하세요.</h2>
             <p class="hero-intro" id="home-intro">
               3학년, 4학년, 5학년, 6학년 자료를 학년별로 선택해 같은 방식의 랜덤 카드 게임으로 이어갑니다.
             </p>
@@ -55,7 +73,7 @@
       <section class="screen game-screen" id="game-screen" hidden>
         <header class="hero-header">
           <p class="hero-kicker" id="lesson-kicker"></p>
-          <h2 id="lesson-title"></h2>
+          <h2 id="lesson-title" tabindex="-1"></h2>
           <p class="hero-intro" id="lesson-description"></p>
         </header>
 
@@ -82,12 +100,14 @@
 
             <div class="focus-status-slot" id="focus-status-slot" hidden></div>
 
+            <div class="focus-status-summary" id="focus-status-summary"></div>
+
             <div class="controls">
               <button class="action-button primary" id="draw-button" type="button">
                 랜덤 뽑기
               </button>
               <button class="action-button secondary" id="reset-button" type="button">
-                초기화
+                게임 처음부터
               </button>
             </div>
 
