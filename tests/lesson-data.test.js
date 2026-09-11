@@ -76,15 +76,16 @@ test("3rd grade exposes lesson 3 missions with PDF cards", () => {
   }
 });
 
-test("4th grade exposes lesson 3 and lesson 5 mission 2 card sets", () => {
+test("4th grade exposes lesson 3, lesson 5 mission 2, and lesson 8 card sets", () => {
   const grade = getGradeById("grade4");
   const lesson3 = getLessonById("grade4-lesson3");
   const lesson5Mission2 = getLessonById("grade4-lesson5-mission2");
+  const lesson8 = getLessonById("grade4-lesson8-period1");
 
-  assert.equal(grade.lessons.length, 2);
+  assert.equal(grade.lessons.length, 3);
   assert.deepEqual(
     getLessonsByGradeId("grade4").map((item) => item.id),
-    ["grade4-lesson3", "grade4-lesson5-mission2"]
+    ["grade4-lesson3", "grade4-lesson5-mission2", "grade4-lesson8-period1"]
   );
   assert.equal(lesson3.title, "3단원 What time is it?");
   assert.equal(lesson3.cards.length, 7);
@@ -127,6 +128,33 @@ test("4th grade exposes lesson 3 and lesson 5 mission 2 card sets", () => {
       `${source} should exist`
     );
   }
+
+  assert.equal(lesson8?.title, "8단원 Do you want some chicken?");
+  assert.equal(lesson8?.unitLabel, "8단원 1차시");
+  assert.equal(lesson8?.cards.length, 10);
+  assert.equal(lesson8?.usesStatusCardGridSlot, true);
+  assert.equal(lesson8?.boardColumnCount, 3);
+  assert.deepEqual(
+    lesson8?.cards.map((card) => card.title),
+    ["curry", "pizza", "chicken", "bread", "juice", "water", "ice cream", "salad", "bananas", "apple"]
+  );
+  const lesson8Sources = Array.from(
+    { length: 10 },
+    (_, index) =>
+      `./4th_grade/lesson8 Do you want some chicken/cards/card-${index + 1}.png`
+  );
+
+  assert.deepEqual(
+    lesson8?.cards.map((card) => card.src),
+    lesson8Sources
+  );
+  for (const source of lesson8Sources) {
+    assert.equal(
+      existsSync(new URL(`../${source.slice(2)}`, import.meta.url)),
+      true,
+      `${source} should exist`
+    );
+  }
 });
 
 test("lessons keeps 5th grade lesson 2, lesson 3, lesson 5, lesson 6, and lesson 7 available", () => {
@@ -148,6 +176,7 @@ test("lessons keeps 5th grade lesson 2, lesson 3, lesson 5, lesson 6, and lesson
       "grade3-lesson3-mission2",
       "grade4-lesson3",
       "grade4-lesson5-mission2",
+      "grade4-lesson8-period1",
       "lesson2",
       "lesson3",
       "grade5-lesson5",

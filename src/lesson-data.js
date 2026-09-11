@@ -230,6 +230,82 @@ const fourthGradeLessons = [
         alt: "Lesson 5 mission 2 watch picture card"
       }
     ]
+  },
+  {
+    id: "grade4-lesson8-period1",
+    title: "8단원 Do you want some chicken?",
+    gradeLabel: "YBM 초등영어 4학년",
+    unitLabel: "8단원 1차시",
+    homeDescription: "첨부 음식 그림을 잘라 만든 음식 카드 10장으로 진행하는 랜덤 뽑기 게임",
+    gameDescription:
+      "뽑힌 음식 카드를 보고 Do you want some ____? 표현을 연습할 수 있도록 구성한 카드판입니다.",
+    boardTitle: "10장 음식 카드판",
+    boardNote:
+      "4학년 8단원 1차시 첨부 이미지에서 curry, pizza, chicken, bread, juice, water, ice cream, salad, bananas, apple 카드 10장을 사용합니다.",
+    usesStatusCardGridSlot: true,
+    boardColumnCount: 3,
+    cards: [
+      {
+        id: "grade4-lesson8-period1-card-1",
+        title: "curry",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-1.png",
+        alt: "Lesson 8 period 1 curry food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-2",
+        title: "pizza",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-2.png",
+        alt: "Lesson 8 period 1 pizza food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-3",
+        title: "chicken",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-3.png",
+        alt: "Lesson 8 period 1 chicken food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-4",
+        title: "bread",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-4.png",
+        alt: "Lesson 8 period 1 bread food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-5",
+        title: "juice",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-5.png",
+        alt: "Lesson 8 period 1 juice food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-6",
+        title: "water",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-6.png",
+        alt: "Lesson 8 period 1 water food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-7",
+        title: "ice cream",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-7.png",
+        alt: "Lesson 8 period 1 ice cream food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-8",
+        title: "salad",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-8.png",
+        alt: "Lesson 8 period 1 salad food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-9",
+        title: "bananas",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-9.png",
+        alt: "Lesson 8 period 1 bananas food picture card"
+      },
+      {
+        id: "grade4-lesson8-period1-card-10",
+        title: "apple",
+        src: "./4th_grade/lesson8 Do you want some chicken/cards/card-10.png",
+        alt: "Lesson 8 period 1 apple food picture card"
+      }
+    ]
   }
 ];
 
@@ -853,11 +929,11 @@ export const grades = [
     id: "grade4",
     title: "4학년",
     gradeLabel: "YBM 초등영어 4학년",
-    unitLabel: "What time is it? · Where is my bag?",
-    homeDescription: "3단원 시간 카드와 5단원 2차시 물건 카드 게임으로 들어갑니다.",
+    unitLabel: "What time is it? · Where is my bag? · Do you want some chicken?",
+    homeDescription: "3단원 시간 카드, 5단원 2차시 물건 카드, 8단원 음식 카드 게임으로 들어갑니다.",
     lessonSelectionTitle: "4학년 단원을 선택하세요.",
     lessonSelectionDescription:
-      "3단원 What time is it? 활동자료 카드 7장과 5단원 2차시 Where is my bag? 물건 카드 10장을 사용할 수 있습니다.",
+      "3단원 What time is it? 활동자료 카드 7장, 5단원 2차시 Where is my bag? 물건 카드 10장, 8단원 Do you want some chicken? 음식 카드 10장을 사용할 수 있습니다.",
     lessons: fourthGradeLessons
   },
   {
